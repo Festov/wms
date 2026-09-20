@@ -1,0 +1,1821 @@
+{
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "logout": "Выйти",
+    "language": "Язык",
+    "russian": "Русский",
+    "english": "English",
+    "alwaysOn": "всегда",
+    "warehouseDefault": "Склад"
+  },
+  "metadata": {
+    "description": "WMS — потоки товара и НСИ"
+  },
+  "login": {
+    "title": "Вход в систему",
+    "loginLabel": "Логин",
+    "passwordLabel": "Пароль",
+    "submit": "Войти",
+    "invalidCredentials": "Неверный логин или пароль"
+  },
+  "settings": {
+    "title": "Настройки",
+    "description": "Параметры склада и включение модулей.",
+    "warehouseSection": "Склад",
+    "warehouseName": "Название",
+    "warehouseCode": "Код",
+    "warehouseHint": "Отображается во вкладке браузера: «Название · Код».",
+    "tsdSection": "ТСД и учёт",
+    "tsdApiKey": "API-ключ ТСД",
+    "tsdApiKeyPlaceholder": "Сгенерируется при seed или задайте вручную",
+    "allowNegativeStock": "Разрешить отрицательные остатки",
+    "overviewMovements": "Движений на обзоре",
+    "modulesSection": "Модули",
+    "languageSection": "Интерфейс",
+    "languageHint": "Язык меню, кнопок и системных подписей. Данные в БД (статусы, мета) пока на языке создания.",
+    "clearDbSection": "Очистка базы",
+    "clearDbDescription": "Удаляет данные, созданные пользователем: документы, остатки, товары, ячейки, зоны, контрагенты, пользовательские разделы меню и справочники конструктора. Пользователи, роли, настройки склада и предопределённые справочники сохраняются.",
+    "clearDbConfirmLabel": "Введите ОЧИСТИТЬ для подтверждения",
+    "clearDbConfirmPlaceholder": "ОЧИСТИТЬ",
+    "clearDbButton": "Очистить базу",
+    "clearDbConfirmMessage": "Очистить пользовательские данные склада? Вы уверены?",
+    "registry": {
+      "allowNegativeStock": {
+        "title": "Разрешить отрицательные остатки"
+      },
+      "putawayAllowOverride": {
+        "title": "Разрешить ручной выбор ячейки при размещении"
+      },
+      "tsdShowPutawayAfterReceive": {
+        "title": "Кнопка «К размещению» после приёмки на ТСД"
+      },
+      "overviewRecentMovementsLimit": {
+        "title": "Лимит «Последних движений» на обзоре",
+        "description": "Сколько строк показывать в блоке последних движений на главной"
+      },
+      "outboxAutoDrainMinutes": {
+        "title": "Автоотправка исходящих (минуты)",
+        "description": "0 = отключено. Минимальный интервал между автоматическими отправками исходящих событий."
+      },
+      "outboxLastDrainAt": {
+        "title": "Время последней автоотправки исходящих"
+      }
+    }
+  },
+  "sidebar": {
+    "overview": "Обзор",
+    "nsi": "НСИ",
+    "inbound": "Приёмка",
+    "outbound": "Отгрузка",
+    "inventory": "Остатки",
+    "operations": "Операции",
+    "admin": "Администрирование",
+    "tsd": "ТСД",
+    "layoutToggleToList": "Вид: список",
+    "layoutToggleToStack": "Вид: иконки с подписью"
+  },
+  "modules": {
+    "nsi": "НСИ",
+    "menus": "Пользовательские интерфейсы",
+    "inbound": "Приёмка",
+    "outbound": "Отгрузка",
+    "inventory": "Остатки",
+    "operations": "Операции",
+    "topology": "Топология",
+    "lots": "Партии",
+    "tsd": "ТСД",
+    "admin": "Администрирование"
+  },
+  "navGroups": {
+    "nsi": "НСИ",
+    "inboundFlow": "Входящий поток",
+    "outboundFlow": "Исходящий поток",
+    "warehouse": "Склад",
+    "app": "Приложение",
+    "system": "Система"
+  },
+  "units": {
+    "pcs": "шт"
+  },
+  "enums": {
+    "DRAFT": "Новый",
+    "RELEASED": "К исполнению",
+    "ACCEPTED": "Принят",
+    "PLACED": "Размещён",
+    "COMPLETED": "Размещён",
+    "POSTED": "Проведён",
+    "CANCELLED": "Отменён",
+    "RECEIVING": "Приёмка",
+    "STORAGE": "Хранение",
+    "SHIPPING": "Отгрузка",
+    "QUARANTINE": "Карантин",
+    "SUPPLIER": "Поставщик",
+    "CUSTOMER": "Клиент",
+    "BOTH": "Поставщик и клиент",
+    "RECEIPT": "Приход",
+    "SHIPMENT": "Расход",
+    "ADJUSTMENT": "Корректировка",
+    "TRANSFER": "Перемещение",
+    "DAY": "Дни",
+    "WEEK": "Недели",
+    "MONTH": "Месяцы",
+    "YEAR": "Годы",
+    "AVAILABLE": "Свободен",
+    "FREE": "Свободна",
+    "BUSY": "Занята"
+  },
+  "status": {
+    "DRAFT": "Новый",
+    "RELEASED": "К исполнению",
+    "AVAILABLE": "Свободен",
+    "ACCEPTED": "Принят",
+    "PLACED": "Размещён",
+    "COMPLETED": "Завершён",
+    "POSTED": "Проведён",
+    "CANCELLED": "Отменён"
+  },
+  "seed": {
+    "roles": {
+      "admin": {
+        "name": "Администратор",
+        "description": "Полный доступ"
+      }
+    },
+    "workflows": {
+      "inbound": "Приёмка",
+      "outbound": "Отгрузка",
+      "operation": "Складские операции"
+    },
+    "workflowTriggers": {
+      "releaseToExecution": "К исполнению",
+      "cancel": "Отменить",
+      "returnToDraft": "Вернуть в черновик",
+      "receiveTsd": "Принять (ТСД)",
+      "placed": "Размещён",
+      "autoAllLinesPlaced": "Авто: все ТН размещены",
+      "placedLegacy": "Размещён (legacy)",
+      "post": "Провести",
+      "pickTsd": "Отбор (ТСД)",
+      "completed": "Выполнено"
+    },
+    "metaEntities": {
+      "units": { "name": "Единица измерения", "plural": "Единицы" },
+      "zones": { "name": "Зона", "plural": "Зоны" },
+      "counterparties": { "name": "Контрагент", "plural": "Контрагенты" },
+      "receiving_docks": { "name": "Рампа", "plural": "Рампы" },
+      "transport_units": { "name": "Транспорт", "plural": "Транспорт" },
+      "packages": { "name": "Упаковка", "plural": "Упаковки" },
+      "pallet_types": { "name": "Тип товарного носителя", "plural": "Типы ТН" },
+      "pallets": { "name": "Товарный носитель", "plural": "Товарные носители" },
+      "cells": { "name": "Ячейка", "plural": "Ячейки" },
+      "nomenclature": { "name": "Номенклатура", "plural": "Номенклатура" },
+      "accounting_models": { "name": "Модель учёта", "plural": "Модели учёта" },
+      "inbound": { "name": "Документ приёмки", "plural": "Приёмка" },
+      "outbound": { "name": "Документ отгрузки", "plural": "Отгрузка" },
+      "operation": { "name": "Операция", "plural": "Операции" }
+    }
+  },
+  "documents": {
+    "operationTypes": {
+      "RECEIVE_REPORT": "Отчёт о приёмке",
+      "PUTAWAY": "Размещение",
+      "TRANSFER": "Перемещение",
+      "PICK": "Отбор"
+    },
+    "inboundKinds": {
+      "PLANNED": "Плановая",
+      "URGENT": "Срочная",
+      "RETURN": "Возврат",
+      "TRANSFER": "Межсклад"
+    },
+    "outboundKinds": {
+      "PLANNED": "Плановая",
+      "URGENT": "Срочная",
+      "RETURN": "Возврат",
+      "TRANSFER": "Межсклад"
+    }
+  },
+  "nsi": {
+    "hub": {
+      "title": "НСИ",
+      "description": "Справочники склада: номенклатура, ячейки, товарные носители и другие.",
+      "recordCount": "{count} записей",
+      "customCatalogCount": "{count} записей · справочник",
+      "customDocumentCount": "{count} док. · документ"
+    },
+    "tabs": {
+      "overview": "Обзор",
+      "nomenclature": "Номенклатура",
+      "counterparties": "Контрагенты",
+      "receivingDocks": "Рампы",
+      "transportUnits": "Транспорт",
+      "zones": "Зоны",
+      "cells": "Ячейки",
+      "palletTypes": "Типы ТН",
+      "pallets": "ТН",
+      "packages": "Упаковки",
+      "units": "Единицы",
+      "accountingModels": "Модели учёта",
+      "labels": "Штрихкоды",
+      "topology": "Топология",
+      "lots": "Партии"
+    },
+    "cards": {
+      "nomenclature": {
+        "title": "Номенклатура",
+        "hint": "Артикул, единица, упаковки"
+      },
+      "counterparties": {
+        "title": "Контрагенты",
+        "hint": "Поставщики и клиенты"
+      },
+      "receivingDocks": {
+        "title": "Рампы",
+        "hint": "Приёмка и отгрузка"
+      },
+      "transportUnits": {
+        "title": "Транспорт",
+        "hint": "ТС и водители"
+      },
+      "zones": {
+        "title": "Зоны",
+        "hint": "Зоны склада"
+      },
+      "cells": {
+        "title": "Ячейки",
+        "hint": "Адресное хранение"
+      },
+      "palletTypes": {
+        "title": "Типы ТН",
+        "hint": "EUR и др. типы носителей"
+      },
+      "pallets": {
+        "title": "ТН",
+        "hint": "Паллеты и др. ТН"
+      },
+      "packages": {
+        "title": "Упаковки",
+        "hint": "Коэффициент, ШК и ВГХ"
+      },
+      "units": {
+        "title": "Базовые единицы",
+        "hint": "шт, кг, л…"
+      },
+      "accountingModels": {
+        "title": "Модели учёта",
+        "hint": "Схемы учёта остатков"
+      },
+      "labels": {
+        "title": "Штрихкоды",
+        "hint": "Справочник и печать по выбору"
+      },
+      "topology": {
+        "title": "Топология",
+        "hint": "План склада и размещение ячеек"
+      },
+      "lots": {
+        "title": "Партии",
+        "hint": "Партии и сроки годности"
+      }
+    }
+  },
+  "admin": {
+    "hub": {
+      "title": "Администрирование",
+      "description": "Настройки склада, пользователи, метаданные и интеграция с внешними системами."
+    },
+    "tabs": {
+      "overview": "Обзор",
+      "settings": "Настройки",
+      "users": "Пользователи",
+      "roles": "Роли",
+      "statuses": "Статусы",
+      "meta": "Метаданные",
+      "nav": "Меню",
+      "integration": "Интеграция",
+      "putaway": "Размещение"
+    },
+    "cards": {
+      "settings": {
+        "title": "Настройки",
+        "hint": "Склад, модули, ТСД"
+      },
+      "users": {
+        "title": "Пользователи",
+        "hint": "Учётные записи и роли"
+      },
+      "roles": {
+        "title": "Роли",
+        "hint": "Права доступа"
+      },
+      "statuses": {
+        "title": "Статусы",
+        "hint": "Жизненный цикл документов"
+      },
+      "meta": {
+        "title": "Метаданные",
+        "hint": "Справочники и поля"
+      },
+      "nav": {
+        "title": "Меню",
+        "hint": "Пункты и иконки левого меню"
+      },
+      "integration": {
+        "title": "Интеграция",
+        "hint": "Обмен с 1С и вебхуки"
+      },
+      "putaway": {
+        "title": "Правила размещения",
+        "hint": "Правила и поведение на ТСД"
+      }
+    }
+  },
+  "permissions": {
+    "groups": {
+      "modules": "Модули",
+      "documents": "Документы",
+      "nsi": "НСИ",
+      "customUi": "Пользовательские интерфейсы",
+      "tsd": "ТСД"
+    },
+    "codes": {
+      "module_inbound": {
+        "title": "Приёмка (модуль)",
+        "viewDescription": "Устарело — используйте право «Документ приёмки»",
+        "writeDescription": "Устарело — используйте право «Документ приёмки — редактирование»"
+      },
+      "module_inbound_write": {
+        "title": "Приёмка (модуль) — редактирование",
+        "viewDescription": "Устарело — используйте право «Документ приёмки — редактирование»",
+        "writeDescription": "Устарело — используйте право «Документ приёмки — редактирование»"
+      },
+      "module_outbound": {
+        "title": "Отгрузка (модуль)",
+        "viewDescription": "Устарело — используйте право «Документ отгрузки»",
+        "writeDescription": "Устарело — используйте право «Документ отгрузки — редактирование»"
+      },
+      "module_outbound_write": {
+        "title": "Отгрузка (модуль) — редактирование",
+        "viewDescription": "Устарело — используйте право «Документ отгрузки — редактирование»",
+        "writeDescription": "Устарело — используйте право «Документ отгрузки — редактирование»"
+      },
+      "module_inventory": {
+        "title": "Остатки",
+        "viewDescription": "Просмотр остатков и отчётов",
+        "writeDescription": "Корректировка остатков и экспорт"
+      },
+      "module_inventory_write": {
+        "title": "Остатки — редактирование",
+        "viewDescription": "Корректировка остатков и экспорт",
+        "writeDescription": "Корректировка остатков и экспорт"
+      },
+      "module_operations": {
+        "title": "Операции (модуль)",
+        "viewDescription": "Устарело — используйте право «Документ операции»",
+        "writeDescription": "Устарело — используйте право «Документ операции — редактирование»"
+      },
+      "module_operations_write": {
+        "title": "Операции (модуль) — редактирование",
+        "viewDescription": "Устарело — используйте право «Документ операции — редактирование»",
+        "writeDescription": "Устарело — используйте право «Документ операции — редактирование»"
+      },
+      "module_admin": {
+        "title": "Администрирование",
+        "viewDescription": "Просмотр настроек, пользователей, ролей",
+        "writeDescription": "Изменение настроек, пользователей и ролей"
+      },
+      "module_admin_write": {
+        "title": "Администрирование — редактирование",
+        "viewDescription": "Изменение настроек, пользователей и ролей",
+        "writeDescription": "Изменение настроек, пользователей и ролей"
+      },
+      "module_topology": {
+        "title": "Топология",
+        "viewDescription": "Просмотр плана склада",
+        "writeDescription": "Изменение плана склада"
+      },
+      "module_topology_write": {
+        "title": "Топология — редактирование",
+        "viewDescription": "Изменение плана склада",
+        "writeDescription": "Изменение плана склада"
+      },
+      "module_lots": {
+        "title": "Партии",
+        "viewDescription": "Просмотр партий и сроков годности",
+        "writeDescription": "Создание и изменение партий"
+      },
+      "module_lots_write": {
+        "title": "Партии — редактирование",
+        "viewDescription": "Создание и изменение партий",
+        "writeDescription": "Создание и изменение партий"
+      },
+      "document_inbound": {
+        "title": "Документ: приёмка",
+        "viewDescription": "Просмотр входящих документов",
+        "writeDescription": "Создание и изменение входящих документов"
+      },
+      "document_inbound_write": {
+        "title": "Документ: приёмка — редактирование",
+        "viewDescription": "Создание и изменение входящих документов",
+        "writeDescription": "Создание и изменение входящих документов"
+      },
+      "document_outbound": {
+        "title": "Документ: отгрузка",
+        "viewDescription": "Просмотр исходящих документов",
+        "writeDescription": "Создание и изменение исходящих документов"
+      },
+      "document_outbound_write": {
+        "title": "Документ: отгрузка — редактирование",
+        "viewDescription": "Создание и изменение исходящих документов",
+        "writeDescription": "Создание и изменение исходящих документов"
+      },
+      "document_operation": {
+        "title": "Документ: операции",
+        "viewDescription": "Просмотр журнала операций",
+        "writeDescription": "Создание и изменение складских операций"
+      },
+      "document_operation_write": {
+        "title": "Документ: операции — редактирование",
+        "viewDescription": "Создание и изменение складских операций",
+        "writeDescription": "Создание и изменение складских операций"
+      },
+      "nsi_hub": {
+        "title": "Обзор НСИ",
+        "viewDescription": "Главная страница раздела НСИ"
+      },
+      "nsi_nomenclature": {
+        "title": "Номенклатура",
+        "viewDescription": "Артикул, упаковки, карточки товаров"
+      },
+      "nsi_counterparties": {
+        "title": "Контрагенты",
+        "viewDescription": "Поставщики и клиенты"
+      },
+      "nsi_receiving_docks": {
+        "title": "Рампы",
+        "viewDescription": "Рампы приёмки и отгрузки"
+      },
+      "nsi_transport_units": {
+        "title": "Транспорт",
+        "viewDescription": "Транспортные средства и водители"
+      },
+      "nsi_zones": {
+        "title": "Зоны",
+        "viewDescription": "Зоны склада"
+      },
+      "nsi_cells": {
+        "title": "Ячейки",
+        "viewDescription": "Адресное хранение"
+      },
+      "nsi_pallet_types": {
+        "title": "Типы ТН",
+        "viewDescription": "EUR и другие типы носителей"
+      },
+      "nsi_pallets": {
+        "title": "ТН",
+        "viewDescription": "Паллеты и товарные носители"
+      },
+      "nsi_packages": {
+        "title": "Упаковки",
+        "viewDescription": "Коэффициенты и ВГХ"
+      },
+      "nsi_units": {
+        "title": "Единицы",
+        "viewDescription": "Базовые единицы измерения"
+      },
+      "nsi_accounting_models": {
+        "title": "Модели учёта",
+        "viewDescription": "Схемы учёта остатков"
+      },
+      "nsi_labels": {
+        "title": "Штрихкоды",
+        "viewDescription": "Справочник штрихкодов"
+      },
+      "module_tsd": {
+        "title": "Веб-интерфейс ТСД",
+        "viewDescription": "Доступ к приложению /tsd"
+      },
+      "tsd_receive": {
+        "title": "Приёмка",
+        "viewDescription": "Приёмка по заказам на терминале"
+      },
+      "tsd_putaway": {
+        "title": "Размещение",
+        "viewDescription": "Размещение принятых ТН"
+      },
+      "tsd_freePutawayScan": {
+        "title": "Свободный скан",
+        "viewDescription": "Размещение вне списка задач"
+      },
+      "tsd_pick": {
+        "title": "Отбор",
+        "viewDescription": "Отбор под отгрузку"
+      },
+      "tsd_transfer": {
+        "title": "Перемещение",
+        "viewDescription": "Перемещение между ячейками"
+      }
+    }
+  },
+  "components": {
+    "shared": {
+      "next": "Далее",
+      "back": "Назад",
+      "confirm": "Подтвердить",
+      "add": "Добавить",
+      "remove": "Удалить",
+      "create": "Создать",
+      "reset": "Сбросить",
+      "find": "Найти",
+      "toList": "К списку",
+      "details": "Реквизиты",
+      "lineDetails": "Реквизиты строки",
+      "goods": "Товары",
+      "status": "Статус",
+      "lines": "Строки",
+      "search": "Поиск",
+      "type": "Тип",
+      "allTypes": "Все типы",
+      "allStatuses": "Все статусы",
+      "addLine": "Добавить строку",
+      "createDocument": "Создать документ",
+      "filterPrefix": "Фильтр: {parts}",
+      "searchFilter": "поиск «{q}»",
+      "noRows": "Строк нет.",
+      "noRowsFiltered": "По фильтру ничего не найдено.",
+      "noDocuments": "Документов пока нет.",
+      "noTasks": "Задач и документов пока нет.",
+      "openDocument": "Открыть {number}",
+      "lineCount": "{count} поз.",
+      "rowNo": "№",
+      "product": "Товар",
+      "package": "Упаковка",
+      "quantity": "Количество",
+      "quantityShort": "Кол-во",
+      "base": "База",
+      "lot": "Партия",
+      "location": "Ячейка",
+      "number": "Номер",
+      "who": "Кто",
+      "when": "Когда",
+      "order": "Заказ",
+      "toOrder": "К заказу {number}",
+      "fromTo": "{from} → {to}",
+      "extraDetails": "Доп. реквизиты",
+      "extraShort": "Доп.",
+      "selectProductFirst": "Сначала выберите товар",
+      "noPackages": "Нет упаковок у товара",
+      "selectPackage": "Выберите упаковку",
+      "createNomenclature": "＋ Создать номенклатуру…",
+      "createLot": "＋ Создать партию…",
+      "createCell": "＋ Создать ячейку…",
+      "createGeneric": "＋ Создать…",
+      "baseUnit": "Базовая ед.",
+      "packageQty": "Кол-во упаковок",
+      "packageQtyRequired": "Кол-во упаковок *",
+      "quantityRequired": "Количество *",
+      "inBaseUnits": "В базовых ед.",
+      "withoutPackage": "Без упаковки (базовые ед.)",
+      "withoutPackageOrSelect": "Без упаковки или выберите",
+      "selectPlaceholder": "— выберите —",
+      "loadError": "Ошибка загрузки",
+      "genericError": "Ошибка",
+      "saving": "Сохранение…",
+      "codeRequired": "Код *",
+      "updated": "Обновлён",
+      "route": "Откуда → Куда",
+      "pallet": "ТН",
+      "destination": "Куда",
+      "place": "Разместить",
+      "docks": "Рампы",
+      "transport": "Транспорт",
+      "inboundOrder": "Заказ приёмки",
+      "notes": "Зачем / примечание",
+      "operationDocs": "Документы операций",
+      "tasksAndDocs": "Задачи и документы · {count}",
+      "quickFilters": "Быстрые фильтры",
+      "searchFilters": "Поиск и фильтры",
+      "all": "Все",
+      "planned": "Запланировано",
+      "released": "К исполнению",
+      "completed": "Выполнено",
+      "packageQtyTitle": "Количество упаковок"
+    },
+    "ui": {
+      "dataTableEmpty": "Нет данных."
+    },
+    "confirmForm": {
+      "defaultMessage": "Вы уверены?"
+    },
+    "documentStatus": {
+      "status": "Статус"
+    },
+    "metaFormField": {
+      "selectCounterparty": "— выберите контрагента —",
+      "createCounterparty": "＋ Создать контрагента…",
+      "createDock": "＋ Создать рампу…",
+      "dockNotSelected": "— не выбрана —",
+      "createTransport": "＋ Создать транспорт…",
+      "transportNotSelected": "— не выбран —"
+    },
+    "metaRecord": {
+      "mainSection": "Основные"
+    },
+    "moduleDisabled": {
+      "message": "Модуль «{moduleName}» выключен. Включите его в настройках, когда будете готовы продолжать.",
+      "toSettings": "К настройкам"
+    },
+    "docHandlers": {
+      "inbound": {
+        "title": "Документ приёмки",
+        "listTitle": "Приёмка",
+        "listDescription": "Документы приёмки: новый → к исполнению → принятие и размещение.",
+        "searchPlaceholder": "Номер, поставщик, PO, ТТН…"
+      },
+      "outbound": {
+        "title": "Документ отгрузки",
+        "listTitle": "Отгрузка",
+        "listDescription": "Документы отгрузки: новый → к исполнению → проведение.",
+        "searchPlaceholder": "Номер, клиент, SO, ТТН…"
+      },
+      "operation": {
+        "listTitle": "Операции",
+        "listDescription": "Единый журнал задач: размещение, перемещение, отбор и отчёты.",
+        "searchPlaceholder": "Номер, ТН, заказ, примечание…"
+      }
+    },
+    "tsdDevice": {
+      "title": "Идентификация устройства",
+      "loading": "Загрузка…",
+      "name": "Имя",
+      "apiKey": "API-ключ ТСД",
+      "apiKeyPlaceholder": "Скопируйте из Настройки → ТСД",
+      "apiKeyMissing": "API-ключ не задан. Получите его у администратора в разделе «Настройки».",
+      "apiKeyRequired": "Укажите API-ключ ТСД",
+      "registerError": "Ошибка регистрации",
+      "registered": "Устройство зарегистрировано",
+      "saveRegister": "Сохранить / зарегистрировать",
+      "defaultName": "ТСД",
+      "deviceKey": "Ключ устройства"
+    },
+    "tsdScan": {
+      "title": "Сканирование",
+      "product": "Товар *",
+      "from": "Откуда *",
+      "to": "Куда *",
+      "location": "Ячейка *",
+      "quantity": "Количество *",
+      "lot": "Партия",
+      "submitting": "Отправка…",
+      "success": "Успешно",
+      "queue": "Очередь: {count}",
+      "flushQueue": "Отправить очередь",
+      "apiKeyMissing": "Настройте API-ключ ТСД на странице «Устройство».",
+      "offlineQueued": "Офлайн — сохранено в очередь ({count})",
+      "errorQueued": "Ошибка сети/API — сохранено в очередь ({count})",
+      "offline": "Нет сети",
+      "httpError": "Ошибка HTTP {status}"
+    },
+    "tsdPutaway": {
+      "toPutaway": "К размещению",
+      "noPallets": "Нет принятых паллет. Завершите приёмку на ТСД.",
+      "scanTn": "Сканировать ТН",
+      "specifyTn": "Укажите ТН",
+      "locationNotFound": "Ячейка не найдена",
+      "placed": "Размещено · {code}"
+    },
+    "tsdReceive": {
+      "selectOrder": "Выберите заказ",
+      "noOrders": "Нет заказов к исполнению",
+      "cellRequired": "Ячейка *",
+      "scanOrEnterCode": "Сканируйте или введите код",
+      "scanPalletHint": "Отсканируйте этикетку паллеты (ТН), на которую кладёте товар.",
+      "tnPallet": "ТН / паллета *",
+      "cellTitle": "Ячейка {code}",
+      "scanProductHint": "Ячейка {cell}. Сканируйте товар или упаковку из заказа.",
+      "productBarcode": "Штрихкод товара / упаковки",
+      "orOrderLine": "Или строка заказа",
+      "lotInLine": "· парт. {lot}",
+      "packageRequired": "Упаковка *",
+      "stockFactor": "(×{factor} в остаток)",
+      "createPackageOption": "＋ Создать упаковку…",
+      "factor": "Коэффициент *",
+      "factorPlaceholder": "Напр. 10",
+      "unit": "Единица *",
+      "createPackage": "Создать упаковку",
+      "packageCount": "Количество упаковок *",
+      "serialNumber": "Серийный номер *",
+      "serialPlaceholder": "Отсканируйте или введите серийный номер",
+      "lotRequired": "Партия *",
+      "lotOptional": "Партия",
+      "lotFromDoc": "Из документа: {hint}",
+      "enterLotNumber": "Введите номер партии",
+      "shelfLifeOneDate": "Срок хранения в номенклатуре задан — достаточно одной даты, вторая рассчитается.",
+      "shelfLifeBothDates": "Срок хранения в номенклатуре не задан — укажите обе даты.",
+      "manufacturedDate": "Дата производства",
+      "manufacturedDateRequired": "Дата производства *",
+      "expiryDate": "Срок годности",
+      "expiryDateRequired": "Срок годности *",
+      "completePallet": "Завершить приёмку на паллете",
+      "changePallet": "Сменить паллету",
+      "backToOrders": "К заказам",
+      "progress": "Прогресс",
+      "allLinesReceived": "Все позиции приняты.",
+      "scanNextProduct": "Сканируйте следующий товар, если он ещё есть в заказе.",
+      "tnAccepted": "ТН {code} принят",
+      "whatNext": "Что дальше? Можно отсканировать следующий носитель по этому заказу или вернуться в меню.",
+      "nextCarrier": "Следующий носитель (ТН)",
+      "toPutaway": "К размещению",
+      "toMainMenu": "В главное меню",
+      "backToOrderSelect": "К выбору заказа",
+      "defaultPackageName": "Упаковка",
+      "specifyReceiveCell": "Укажите ячейку приёмки",
+      "cellWithZone": "Ячейка {code} · зона «{zone}»",
+      "cellOnly": "Ячейка {code}",
+      "cellUnavailable": "Ячейка недоступна",
+      "scanTnLabel": "Отсканируйте этикетку ТН (паллеты)",
+      "tnAtCell": "ТН {code} · ячейка {cell}",
+      "productNotInOrder": "Товар не найден в выбранном заказе",
+      "productNotFound": "Товар не найден",
+      "selectProductFirst": "Сначала выберите товар",
+      "factorMustBePositive": "Укажите коэффициент больше 0",
+      "specifyUnit": "Укажите единицу",
+      "packageNotCreated": "Упаковка не создана",
+      "packageCreated": "Упаковка {name} создана",
+      "packageCreateError": "Ошибка создания упаковки",
+      "createPackageOrSelect": "Сначала создайте упаковку или выберите из списка",
+      "selectPackage": "Выберите упаковку",
+      "specifySerial": "Укажите серийный номер",
+      "specifyLot": "Укажите партию",
+      "specifyMfgOrExpiry": "Укажите дату производства или срок годности",
+      "specifyBothDatesNoShelfLife": "У номенклатуры не задан срок хранения — укажите дату производства и срок годности",
+      "specifyQuantity": "Укажите количество",
+      "scanOrSelectProduct": "Отсканируйте или выберите товар",
+      "orderFullyReceived": "Заказ полностью принят. Можно завершить приёмку на паллете.",
+      "receivedOnPallet": "Принято на {tn}: {qty} × {package}. Сканируйте следующий товар или завершите приёмку на паллете.",
+      "palletAlreadyAccepted": "ТН {code} уже был принят.",
+      "palletAcceptanceComplete": "Приёмка на {code} завершена."
+    },
+    "quickCreate": {
+      "titles": {
+        "nomenclature": "Новая номенклатура",
+        "counterparty": "Новый контрагент",
+        "lot": "Новая партия",
+        "cell": "Новая ячейка",
+        "unit": "Новая единица",
+        "zone": "Новая зона",
+        "receivingDock": "Новая рампа",
+        "transportUnit": "Новый транспорт"
+      },
+      "hint": "Останетесь на текущей странице — запись появится в списке сразу.",
+      "sku": "Артикул *",
+      "name": "Название *",
+      "unit": "Единица измерения *",
+      "barcode": "Штрихкод",
+      "counterpartyType": "Тип",
+      "product": "Товар *",
+      "selectedProduct": "Выбранный товар",
+      "lotNumber": "Номер партии *",
+      "expiryDate": "Срок годности",
+      "cellCode": "Штрих-код *",
+      "zone": "Зона *",
+      "symbol": "Обозначение",
+      "storageType": "Тип хранения *",
+      "warehouseZone": "Зона склада",
+      "createZone": "＋ Создать зону…",
+      "noZoneBinding": "— без привязки —",
+      "note": "Примечание",
+      "plateNumber": "Госномер ТС *",
+      "driverName": "ФИО водителя *",
+      "driverPhone": "Телефон водителя",
+      "driverLicense": "Водительское удостоверение",
+      "passport": "Паспорт",
+      "carrier": "Перевозчик",
+      "lotProductRequired": "Укажите товар и номер партии",
+      "nomenclatureRequired": "Заполните артикул, название и единицу",
+      "nameRequired": "Укажите название",
+      "cellRequired": "Заполните штрих-код, название и зону",
+      "dockNameRequired": "Укажите название рампы",
+      "transportRequired": "Укажите госномер и ФИО водителя",
+      "saveError": "Ошибка сохранения"
+    },
+    "receivingDockLinkedDocs": {
+      "inboundTitle": "Связанные документы приёмки",
+      "outboundTitle": "Связанные документы отгрузки"
+    },
+    "statusHistory": {
+      "title": "История статусов",
+      "when": "Когда",
+      "from": "Было",
+      "to": "Стало",
+      "source": "Источник",
+      "who": "Кто",
+      "note": "Примечание",
+      "sources": {
+        "web": "Веб",
+        "tsd": "ТСД",
+        "system": "Система"
+      }
+    },
+    "inboundReceiveFact": {
+      "title": "Факт приёмки",
+      "summary": "{lineCount} строк · {received} из {planned} в базовых ед. · {pallets} ТН",
+      "postedSuffix": " · принят {date}",
+      "close": "Закрыть",
+      "factLines": "Строки факта",
+      "factLinesCount": "Строки факта ({count})",
+      "empty": "Строк факта нет."
+    },
+    "documentExtraFields": {
+      "createLabel": "＋ Создать…"
+    },
+    "labelsBarcodeList": {
+      "hint": "Отметьте штрихкоды в списке и нажмите «Печать». Изображения формируются только для выбранных позиций.",
+      "search": "Поиск",
+      "searchPlaceholder": "Код, название, тип…",
+      "labelType": "Тип этикетки",
+      "print": "Печать",
+      "printCount": "Печать · {count}",
+      "title": "Штрихкоды · {count}",
+      "colType": "Тип",
+      "colObject": "Объект",
+      "colBarcode": "Штрихкод",
+      "emptyFiltered": "По запросу ничего не найдено.",
+      "emptyDefault": "Штрихкодов пока нет. Заполните номенклатуру, ячейки или ТН.",
+      "selectAria": "Выбрать {code}",
+      "card": "Карточка"
+    },
+    "rackConfigForm": {
+      "configTitle": "Конфигурация стеллажа",
+      "aisle": "Проезд *",
+      "zone": "Зона *",
+      "selectZone": "— выберите зону —",
+      "createZone": "＋ Создать зону…",
+      "rackCount": "Стеллажей *",
+      "levelCount": "Ярусов *",
+      "positionCount": "Мест на ярусе *",
+      "barcodeTitle": "Штрих-код",
+      "template": "Шаблон *",
+      "templateHint": "'{A}' — проезд, '{R}' — стеллаж, '{L}' — ярус, '{P}' — место. Пример: {preview}",
+      "nameTemplate": "Шаблон названия",
+      "nameTemplatePlaceholder": "Как штрих-код, если пусто",
+      "willCreate": "Будет создано: {total} яч. (макс. 500)",
+      "submit": "Создать {total} яч."
+    },
+    "nomenclaturePackages": {
+      "title": "Упаковки",
+      "name": "Название",
+      "factor": "Коэф.",
+      "unit": "Ед.",
+      "barcodeShort": "ШК",
+      "empty": "Упаковок пока нет — добавьте справа.",
+      "newTitle": "Новая упаковка",
+      "unitRequired": "Единица *",
+      "createUnit": "＋ Создать единицу…",
+      "factorRequired": "Коэффициент *",
+      "barcode": "Штрихкод",
+      "barcodePlaceholder": "ШК этой упаковки",
+      "add": "Добавить",
+      "editHint": "Редактирование упаковки без перехода в справочник",
+      "close": "Закрыть",
+      "saveError": "Ошибка сохранения",
+      "dimensions": "ВГХ",
+      "lengthMm": "Длина, мм",
+      "widthMm": "Ширина, мм",
+      "heightMm": "Высота, мм",
+      "weightGrossKg": "Вес брутто, кг"
+    },
+    "nomenclatureAccounting": {
+      "model": "Модель учёта",
+      "modelRequired": "Модель учёта *",
+      "shelfLife": "Срок хранения",
+      "shelfLifeUnit": "Ед. срока хранения",
+      "numberPlaceholder": "Число"
+    },
+    "createApiKey": {
+      "namePlaceholder": "Имя ключа",
+      "defaultName": "Партнёр",
+      "submit": "Создать ключ",
+      "created": "Ключ (скопируйте сейчас): {key}"
+    },
+    "createableSelect": {
+      "showAll": "Показать все…",
+      "pickFromList": "Выбор из списка",
+      "kinds": {
+        "nomenclature": "Номенклатура",
+        "counterparty": "Контрагенты",
+        "lot": "Партии",
+        "cell": "Ячейки",
+        "unit": "Единицы",
+        "zone": "Зоны",
+        "receivingDock": "Рампы",
+        "transportUnit": "Транспорт"
+      }
+    },
+    "showAllDialog": {
+      "defaultTitle": "Выбор из списка",
+      "hint": "Найдите запись и выберите её из списка.",
+      "searchPlaceholder": "Поиск…",
+      "loading": "Загрузка…",
+      "notFound": "Ничего не найдено",
+      "close": "Закрыть"
+    },
+    "sectionTabs": {
+      "ariaLabel": "Разделы"
+    },
+    "englishCodeField": {
+      "label": "Код *",
+      "title": "Только латиница (a–z), цифры и _",
+      "hint": "Только латиница, цифры и _"
+    },
+    "accountingModelFlags": {
+      "hint": "Сначала включите учёт по партиям — тогда станут доступны остальные параметры.",
+      "useLots": "Учёт по партиям",
+      "useExpiry": "Срок годности",
+      "useSerial": "Серийные номера",
+      "lotNameTemplate": "Шаблон имени партии",
+      "templateHint": "'{SKU}', '{YYYYMMDD}', '{DATE}', '{EXPIRY}', '{####}', '{SERIAL}'. Пусто — номер вводят на ТСД."
+    },
+    "printPageButton": {
+      "label": "Печать страницы"
+    }
+  },
+  "dialogs": {
+    "admin": {
+      "users": {
+        "createButton": "Создать пользователя",
+        "title": "Новый пользователь",
+        "description": "Локальная учётная запись с выбранной ролью.",
+        "login": "Логин *",
+        "name": "Имя *",
+        "password": "Пароль *",
+        "role": "Роль *",
+        "noRoles": "Сначала создайте роль"
+      },
+      "roles": {
+        "createButton": "Создать роль",
+        "title": "Новая роль",
+        "description": "После создания настройте права через «Изменить права» в списке.",
+        "code": "Код *",
+        "name": "Название *",
+        "descriptionLabel": "Описание",
+        "namePlaceholder": "Супервайзер",
+        "descriptionPlaceholder": "Кратко о назначении роли",
+        "editPermissions": "Изменить права",
+        "permissionsTitle": "Права роли",
+        "permissionsDescription": "Изменения прав применяются при следующем переходе по сайту.",
+        "access": "Доступ",
+        "view": "Просмотр",
+        "editColumn": "Редактирование",
+        "emptyCustomUi": "Нет пользовательских разделов меню и справочников. Создайте их в админке.",
+        "emptyGroup": "Нет доступных прав в этой группе.",
+        "accessAria": "{title} — доступ",
+        "viewAria": "{title} — просмотр",
+        "editAria": "{title} — редактирование"
+      },
+      "statuses": {
+        "createButton": "Создать статус",
+        "title": "Новый статус",
+        "description": "Потоки и цвета настраиваются в таблице после создания.",
+        "code": "Код *",
+        "name": "Название *",
+        "namePlaceholder": "На удержании"
+      },
+      "meta": {
+        "createEntityButton": "Создать справочник",
+        "createEntityTitle": "Новый пользовательский справочник",
+        "createEntityDescription": "Справочник появится во вкладках выбранного раздела меню — как справочники внутри НСИ.",
+        "createDocumentButton": "Создать документ",
+        "createDocumentTitle": "Новый пользовательский документ",
+        "createDocumentDescription": "Документ появится во вкладках выбранного раздела меню. По умолчанию — номер, дата и комментарий; поля можно расширить в метаданных.",
+        "name": "Название *",
+        "pluralName": "Мн. число",
+        "pluralNameEntityPlaceholder": "Бренды",
+        "pluralNameDocumentPlaceholder": "Заявки",
+        "pluralNameEntityHint": "Заголовок списка, вкладок и карточки в НСИ (например, «Бренды»). Если пусто — совпадает с названием.",
+        "pluralNameDocumentHint": "Заголовок списка и вкладок (например, «Заявки»). Если пусто — совпадает с названием.",
+        "description": "Описание",
+        "descriptionEntityPlaceholder": "Производители и торговые марки товаров",
+        "descriptionDocumentPlaceholder": "Внутренние заявки на закупку",
+        "descriptionEntityHint": "Краткая подпись под названием на обзоре НСИ и в разделе меню.",
+        "descriptionDocumentHint": "Краткая подпись на обзоре НСИ и в разделе меню.",
+        "navSection": "Раздел меню *",
+        "navSectionEntityHint": "Справочник откроется во вкладках сверху внутри выбранного раздела.",
+        "withLines": "Табличная часть (строки документа)",
+        "nameEntityPlaceholder": "Бренд",
+        "nameDocumentPlaceholder": "Заявка",
+        "editEntity": {
+          "code": "Код",
+          "codeHint": "Код нельзя изменить после создания. Ссылка: {href}",
+          "name": "Название *",
+          "pluralName": "Мн. число",
+          "pluralNameHint": "Заголовок списка, вкладок и карточки в НСИ. Если пусто — как в «Название».",
+          "description": "Описание",
+          "descriptionDocumentPlaceholder": "Внутренние заявки на закупку",
+          "descriptionEntityPlaceholder": "Производители и торговые марки товаров",
+          "descriptionHint": "Подпись на обзоре НСИ и в разделе меню.",
+          "navSection": "Раздел меню",
+          "navSectionHintDocument": "Где показывать документ: в НСИ или во вкладках пользовательского раздела.",
+          "navSectionHintEntity": "Где показывать справочник: в НСИ или во вкладках пользовательского раздела.",
+          "withLines": "Табличная часть (строки документа)",
+          "withWorkflow": "Workflow (статусы и переходы)",
+          "saveProperties": "Сохранить свойства"
+        },
+        "addAttribute": {
+          "createButton": "Добавить атрибут",
+          "title": "Новый атрибут",
+          "code": "Код *",
+          "name": "Название *",
+          "section": "Секция",
+          "type": "Тип",
+          "refEntity": "Ссылка на справочник (ref)",
+          "enumValues": "enum через запятую",
+          "required": "Обязательный",
+          "formVisible": "В форме",
+          "listVisible": "В списке",
+          "namePlaceholder": "Бренд",
+          "add": "Добавить"
+        },
+        "addLineColumn": {
+          "createButton": "Добавить колонку",
+          "title": "Новая колонка строк",
+          "code": "Код *",
+          "name": "Название *",
+          "type": "Тип *",
+          "refEntity": "Справочник *",
+          "selectRef": "— выберите —",
+          "required": "Обязательное",
+          "namePlaceholder": "Сумма",
+          "add": "Добавить",
+          "fieldTypes": {
+            "string": "Строка",
+            "number": "Число",
+            "bool": "Да/нет",
+            "date": "Дата",
+            "ref": "Ссылка"
+          }
+        }
+      },
+      "nav": {
+        "createButton": "Добавить пункт",
+        "createTitle": "Новый пункт меню",
+        "createDescription": "Раздел левого меню. Справочники добавляются внутрь него через «Метаданные».",
+        "sectionCode": "Код раздела *",
+        "menuLabel": "Название в меню *",
+        "menuLabelPlaceholder": "Партнёры",
+        "link": "Ссылка",
+        "icon": "Иконка",
+        "editTitle": "Изменить пункт меню",
+        "active": "Активен",
+        "menuPreviewTitle": "Как в меню",
+        "iconAria": "Иконка: {label}"
+      }
+    }
+  },
+  "pages": {
+    "common": {
+      "back": "Назад",
+      "toList": "К списку",
+      "create": "Создать",
+      "creating": "Создание…",
+      "saving": "Сохранение…",
+      "adding": "Добавление…",
+      "saveError": "Ошибка сохранения",
+      "createError": "Ошибка создания",
+      "show": "Показать",
+      "reset": "Сбросить",
+      "edit": "Изменить",
+      "delete": "Удалить",
+      "product": "Товар",
+      "nomenclature": "Номенклатура",
+      "lots": "Партии",
+      "toDocument": "К документу",
+      "addLine": "Добавить строку",
+      "editLineTitle": "Строка {lineNo}: {title}",
+      "actions": "Действия",
+      "lines": "Строки",
+      "noLines": "Строк пока нет",
+      "openAria": "Открыть: {label}",
+      "openTask": "Открыть задачу: {sku}",
+      "openLot": "Открыть партию {number}",
+      "openCell": "Открыть ячейку {code}",
+      "openOperation": "Открыть операцию",
+      "recordsCount": "{count} записей",
+      "catalogBadge": "{count} записей · справочник",
+      "documentBadge": "{count} док. · документ",
+      "yes": "Да",
+      "no": "Нет",
+      "mainSection": "Основное",
+      "createRef": "Создать…",
+      "createNomenclature": "Создать номенклатуру…",
+      "predefinedSuffix": "предопределённый",
+      "newTitle": "Новый: {name}",
+      "editTitle": "Редактирование: {name}",
+      "lineTitle": "Строка: {title}",
+      "allZones": "Все зоны",
+      "allModels": "Все модели",
+      "value": "Значение",
+      "skuOrName": "Артикул или название",
+      "code": "Код",
+      "number": "Номер",
+      "truncatedWarning": "Показаны не все строки. Уточните фильтры.",
+      "paginationBack": "Назад",
+      "paginationForward": "Вперёд",
+      "ok": "ОК",
+      "active": "Активен",
+      "disabled": "Отключён",
+      "enable": "Включить",
+      "disable": "Отключить",
+      "moveUp": "Выше",
+      "moveDown": "Ниже",
+      "systemRole": "системная",
+      "open": "Открыть",
+      "signIn": "Войти",
+      "nsi": "НСИ",
+      "toSettings": "К настройкам",
+      "createCell": "Создать ячейку",
+      "createRack": "Создать стеллаж",
+      "quantity": "Количество",
+      "details": "Сведения",
+      "showAllLots": "Показать все партии",
+      "emptyCatalog": "Записей пока нет",
+      "emptyDocuments": "Документов пока нет",
+      "result": "Результат",
+      "zoneTypeReceiving": "Приёмка",
+      "zoneTypeShipping": "Отгрузка",
+      "zoneTypeQuarantine": "Карантин",
+      "zoneTypeStorage": "Хранение"
+    },
+    "forbidden": {
+      "title": "Доступ запрещён",
+      "message": "У вас нет прав для просмотра этой страницы.",
+      "linkToNsi": "Перейти в НСИ"
+    },
+    "moduleDisabled": {
+      "title": "Модуль отключён",
+      "message": "Этот модуль выключен. Включите его в настройках.",
+      "messageWithCode": "Модуль «{code}» выключен. Включите его в настройках."
+    },
+    "overview": {
+      "title": "Обзор",
+      "description": "Сводка по потокам и последние движения.",
+      "planned": "Запланировано",
+      "newOrders": "новые заказы",
+      "inProgress": "В работе",
+      "toExecuteWarehouse": "к исполнению на складе",
+      "toExecuteShort": "к исполнению",
+      "internalOperations": "Внутренние операции",
+      "newTasks": "новые задачи",
+      "toExecute": "К исполнению",
+      "operationsHint": "размещение, перемещение, отбор",
+      "noFlows": "Нет активных потоков. Включите модули в",
+      "settingsLink": "настройках",
+      "recentMovements": "Последние движения",
+      "movementsLimit": "последние {limit}",
+      "when": "Когда",
+      "operation": "Операция",
+      "product": "Товар",
+      "quantity": "Количество",
+      "note": "Примечание",
+      "noMovements": "Движений пока нет"
+    },
+    "inventory": {
+      "title": "Остатки",
+      "description": "Остатки по ячейкам, зонам и товарам. Группировки, фильтры и экспорт.",
+      "exportCsv": "Экспорт CSV",
+      "exportExcel": "Экспорт Excel",
+      "quickPresets": "Быстрые пресеты",
+      "byZone": "По зоне",
+      "filters": "Фильтры",
+      "product": "Товар",
+      "zone": "Зона",
+      "location": "Ячейка",
+      "lot": "Партия",
+      "pallet": "ТН",
+      "groupBy": "Группировка",
+      "accountingModel": "Модель учёта",
+      "metaAttr": "Реквизит",
+      "expiringDays": "Срок годности, дн.",
+      "emptyHint": "Задайте фильтры и нажмите «Показать».",
+      "noResults": "Нет данных по выбранным фильтрам.",
+      "package": "Упаковка",
+      "packagesShort": "Уп.",
+      "expiry": "Срок",
+      "base": "База",
+      "baseUnit": "Базовая ед.",
+      "quantity": "Количество",
+      "rows": "Строк",
+      "groupDetail": "Детально",
+      "groupProduct": "Сводка по товару",
+      "groupZone": "Сводка: зона × товар",
+      "groupLocation": "Сводка: ячейка × товар",
+      "presets": {
+        "summary-product": {
+          "label": "Сводка по товарам",
+          "hint": "Итоги по артикулу"
+        },
+        "summary-zone": {
+          "label": "Сводка по зонам",
+          "hint": "Товар × зона"
+        },
+        "summary-location": {
+          "label": "Сводка по ячейкам",
+          "hint": "Товар × ячейка"
+        },
+        "expiring-7": {
+          "label": "Срок < 7 дн.",
+          "hint": "Партии"
+        },
+        "expiring-30": {
+          "label": "Срок < 30 дн.",
+          "hint": "Партии"
+        }
+      }
+    },
+    "topology": {
+      "title": "Топология",
+      "description": "План склада и размещение ячеек на карте.",
+      "nsiCells": "Ячейки НСИ",
+      "mapSize": "Размер карты",
+      "width": "Ширина",
+      "height": "Высота",
+      "noCells": "Нет ячеек на карте. Создайте ячейки в",
+      "noCellsLink": "справочнике ячеек"
+    },
+    "labels": {
+      "title": "Штрихкоды",
+      "description": "Справочник штрихкодов: номенклатура, ячейки, ТН. Печать по выбору."
+    },
+    "lots": {
+      "title": "Партии",
+      "description": "Список партий и остатков по ним.",
+      "descriptionFiltered": "Партии товара {sku} · {name}",
+      "newTitle": "Новая партия",
+      "lot": "Партия",
+      "product": "Товар",
+      "lotNumber": "Номер партии",
+      "expiryDate": "Срок годности",
+      "manufacturedAt": "Дата производства",
+      "manufacturedAtShort": "Дата произв.",
+      "manufactured": "Произведена",
+      "createdAt": "Создана",
+      "balance": "Остаток",
+      "balancesByLocation": "Остатки по ячейкам ({count})",
+      "zone": "Зона",
+      "location": "Ячейка",
+      "pallet": "ТН",
+      "package": "Упаковка",
+      "quantity": "Количество",
+      "noBalances": "Остатков нет",
+      "recentMovements": "Последние движения",
+      "when": "Когда",
+      "type": "Тип",
+      "from": "Откуда",
+      "to": "Куда",
+      "note": "Примечание",
+      "noMovements": "Движений пока нет",
+      "expiry": "Срок",
+      "locations": "Ячейки",
+      "empty": "Партий пока нет"
+    },
+    "tsd": {
+      "title": "ТСД",
+      "receive": "Приёмка",
+      "putaway": "Размещение",
+      "pick": "Отбор",
+      "transfer": "Перемещение",
+      "device": "Устройство"
+    },
+    "doc": {
+      "newInbound": "Новый заказ на приёмку",
+      "newOutbound": "Новый заказ на отгрузку"
+    },
+    "catalog": {
+      "rackTitle": "Создать стеллаж",
+      "palletStatusHint": "Статус меняется автоматически при приёмке и размещении.",
+      "packageNameHint": "Имя и код формируются автоматически из номенклатуры и коэффициента.",
+      "barcodeTemplateHint": "Шаблон этикетки: {TYPE} — тип, {HASHES} — счётчик.",
+      "packageAutoHint": "Имя и штрихкод упаковки можно оставить пустыми — они сгенерируются при создании.",
+      "palletNewHint": "Укажите количество единиц на ТН при создании."
+    },
+    "nsi": {
+      "title": "НСИ",
+      "description": "Справочники склада: номенклатура, ячейки, товарные носители и другие.",
+      "hubCards": {
+        "products": {
+          "title": "Номенклатура",
+          "hint": "Артикул, единица, упаковки"
+        },
+        "counterparties": {
+          "title": "Контрагенты",
+          "hint": "Поставщики и клиенты"
+        },
+        "receivingDocks": {
+          "title": "Рампы",
+          "hint": "Приёмка и отгрузка"
+        },
+        "transportUnits": {
+          "title": "Транспорт",
+          "hint": "ТС и водители"
+        },
+        "zones": {
+          "title": "Зоны",
+          "hint": "Зоны склада"
+        },
+        "cells": {
+          "title": "Ячейки",
+          "hint": "Адресное хранение"
+        },
+        "palletTypes": {
+          "title": "Типы ТН",
+          "hint": "EUR и др. типы носителей"
+        },
+        "pallets": {
+          "title": "ТН",
+          "hint": "Паллеты и др. ТН"
+        },
+        "packages": {
+          "title": "Упаковки",
+          "hint": "Коэффициент, ШК и ВГХ"
+        },
+        "units": {
+          "title": "Базовые единицы",
+          "hint": "шт, кг, л…"
+        },
+        "accountingModels": {
+          "title": "Модели учёта",
+          "hint": "Схемы учёта остатков"
+        },
+        "labels": {
+          "title": "Штрихкоды",
+          "hint": "Справочник и печать по выбору"
+        },
+        "topology": {
+          "title": "Топология",
+          "hint": "План склада и размещение ячеек"
+        },
+        "lots": {
+          "title": "Партии",
+          "hint": "Партии и сроки годности"
+        }
+      }
+    },
+    "navHub": {
+      "description": "Справочники и документы этого раздела меню.",
+      "empty": "В этом разделе пока нет справочников и документов."
+    },
+    "admin": {
+      "title": "Администрирование",
+      "description": "Настройки склада, пользователи, метаданные и интеграция с внешними системами.",
+      "counts": {
+        "warehouse": "склад",
+        "rules": "правила"
+      },
+      "hubCards": {
+        "/settings": {
+          "title": "Настройки",
+          "hint": "Склад, модули, ТСД"
+        },
+        "/admin/users": {
+          "title": "Пользователи",
+          "hint": "Учётные записи и роли"
+        },
+        "/admin/roles": {
+          "title": "Роли",
+          "hint": "Права доступа"
+        },
+        "/admin/statuses": {
+          "title": "Статусы",
+          "hint": "Жизненный цикл документов"
+        },
+        "/admin/meta": {
+          "title": "Метаданные",
+          "hint": "Справочники и поля"
+        },
+        "/admin/nav": {
+          "title": "Меню",
+          "hint": "Пункты и иконки левого меню"
+        },
+        "/admin/integration": {
+          "title": "Интеграция",
+          "hint": "Обмен с 1С и вебхуки"
+        },
+        "/admin/putaway": {
+          "title": "Правила размещения",
+          "hint": "Правила и поведение на ТСД"
+        }
+      },
+      "users": {
+        "title": "Пользователи",
+        "description": "Учётные записи и назначение ролей.",
+        "login": "Логин",
+        "name": "Имя",
+        "role": "Роль",
+        "status": "Статус"
+      },
+      "roles": {
+        "title": "Роли",
+        "description": "Права доступа по ролям.",
+        "role": "Роль",
+        "descriptionCol": "Описание",
+        "users": "Польз.",
+        "deleteConfirm": "Удалить роль «{name}»?",
+        "deleteDisabledTitle": "Роль назначена {count} пользователям"
+      },
+      "statuses": {
+        "title": "Статусы",
+        "description": "Названия, цвета и потоки документов.",
+        "code": "Код",
+        "sample": "Образец",
+        "name": "Название",
+        "active": "Акт.",
+        "bg": "Фон",
+        "fg": "Текст",
+        "border": "Рамка",
+        "workflowHint": "Переходы статусов для документов и операций на ТСД.",
+        "from": "Из",
+        "to": "В",
+        "guard": "Условие",
+        "triggers": "Триггеры",
+        "noTransitions": "Переходов пока нет",
+        "fromEmpty": "— начало —",
+        "toStatus": "— статус —",
+        "noGuard": "Без условия",
+        "buttonLabel": "Подпись кнопки",
+        "tsdEvent": "Событие ТСД",
+        "addTransition": "Добавить переход",
+        "guards": {
+          "hasLines": "Есть строки",
+          "readyToPlace": "Готов к размещению"
+        },
+        "triggerKinds": {
+          "manual": "Вручную",
+          "tsd": "ТСД",
+          "auto": "Авто",
+          "integration": "Интеграция"
+        },
+        "fieldTypes": {
+          "string": "Строка",
+          "number": "Число",
+          "bool": "Логический",
+          "date": "Дата",
+          "enum": "Перечисление",
+          "ref": "Ссылка"
+        },
+        "streams": {
+          "forInbound": {
+            "label": "Приёмка",
+            "title": "Входящие документы"
+          },
+          "forOutbound": {
+            "label": "Отгрузка",
+            "title": "Исходящие документы"
+          },
+          "forPutaway": {
+            "label": "Размещение",
+            "title": "Размещение и перемещение"
+          },
+          "forPallet": {
+            "label": "ТН",
+            "title": "Статус товарного носителя"
+          },
+          "forTransfer": {
+            "label": "Перемещение",
+            "title": "Внутренние перемещения"
+          }
+        }
+      },
+      "meta": {
+        "title": "Метаданные",
+        "description": "Справочники, документы и поля конструктора.",
+        "code": "Код",
+        "name": "Название",
+        "kind": "Вид",
+        "storage": "Хранение",
+        "attributes": "Поля",
+        "open": "Открыть",
+        "document": "Документ",
+        "catalog": "Справочник",
+        "toList": "К списку",
+        "openDocuments": "Открыть документы",
+        "openCatalog": "Открыть справочник",
+        "lineColumns": "Колонки строк",
+        "lineColumnsAuto": "Колонки задаются автоматически для системных документов.",
+        "attrCode": "Код поля",
+        "attrName": "Название",
+        "type": "Тип",
+        "required": "Обяз.",
+        "noLineColumns": "Колонок пока нет",
+        "section": "Раздел",
+        "requiredShort": "Обяз.",
+        "form": "Форма",
+        "list": "Список",
+        "fieldType": "Вид поля",
+        "systemField": "системное",
+        "extensionField": "дополнительное",
+        "addAttrHintDocument": "Добавить поле в документ",
+        "addAttrHintSystem": "Добавить пользовательское поле в системный справочник",
+        "addAttrHintCustom": "Добавить поле в справочник",
+        "deleteAttrConfirm": "Удалить поле «{name}»?",
+        "ariaName": "Название",
+        "ariaSection": "Секция",
+        "ariaRequired": "Обязательный",
+        "ariaFormVisible": "В форме",
+        "ariaListVisible": "В списке",
+        "tooltipSystemField": "Встроенное поле сущности, удалить нельзя",
+        "tooltipExtensionField": "Дополнительное поле, значения хранятся в EAV"
+      },
+      "nav": {
+        "title": "Меню",
+        "description": "Пункты левого меню: порядок, подписи и иконки.",
+        "empty": "Пунктов меню пока нет",
+        "item": "Пункт",
+        "preview": "Превью",
+        "icon": "Иконка",
+        "deleteConfirm": "Удалить пункт «{label}»?"
+      },
+      "integration": {
+        "title": "Интеграция",
+        "description": "Обмен с внешними системами, вебхук и API-ключи.",
+        "drainOutbox": "Отправить исходящие",
+        "retryInbox": "Повторить входящие",
+        "retryOutbox": "Повторить исходящие",
+        "webhookSection": "Вебхук",
+        "url": "URL",
+        "hmacSecret": "HMAC-секрет",
+        "active": "Активен",
+        "saveWebhook": "Сохранить вебхук",
+        "oneCSection": "1С",
+        "secret": "Секрет",
+        "saveOneC": "Сохранить 1С",
+        "apiKeys": "API-ключи",
+        "keyName": "Название",
+        "prefix": "Префикс",
+        "status": "Статус",
+        "inactive": "Неактивен",
+        "outboxRecent": "Последние исходящие события",
+        "event": "Событие",
+        "aggregate": "Агрегат",
+        "attempts": "Попытки",
+        "error": "Ошибка",
+        "inboxRecent": "Последние входящие события",
+        "source": "Источник",
+        "type": "Тип",
+        "externalId": "Внешний ID"
+      },
+      "putaway": {
+        "title": "Правила размещения",
+        "description": "Приоритеты правил подбора ячейки и поведение на ТСД.",
+        "priority": "Приоритет",
+        "enabled": "Включено",
+        "behavior": "Поведение на ТСД",
+        "manualOverride": "Разрешить ручной выбор ячейки",
+        "manualOverrideHint": "Оператор может выбрать другую ячейку при размещении.",
+        "putawayAfterReceive": "Кнопка «К размещению» после приёмки",
+        "putawayAfterReceiveHint": "Показывать переход к размещению сразу после приёмки на ТСД.",
+        "rules": {
+          "same_product": {
+            "title": "К такому же товару",
+            "description": "Ячейка хранения, где уже есть хотя бы один из товаров на ТН."
+          },
+          "empty_cell": {
+            "title": "В пустую ячейку",
+            "description": "Свободная ячейка хранения без остатков."
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "api": {
+      "moduleDisabled": "Модуль отключён",
+      "unauthorized": "Требуется авторизация",
+      "loginRequired": "Требуется вход",
+      "forbidden": "Недостаточно прав для этой операции",
+      "apiKeyNotConfigured": "API-ключ ТСД не настроен",
+      "internal": "Внутренняя ошибка",
+      "invalidPayload": "Некорректные данные запроса",
+      "sessionNotFound": "Сессия не найдена",
+      "deviceKeyRequired": "Укажите ключ устройства",
+      "idRequired": "Укажите идентификатор",
+      "productLocationQtyRequired": "Укажите товар, ячейку и количество",
+      "documentIdRequired": "Укажите документ",
+      "palletRequired": "Укажите товарный носитель (ТН)",
+      "barcodeOrSkuRequired": "Укажите штрихкод или артикул",
+      "codeOrBarcodeRequired": "Укажите код или штрихкод ячейки",
+      "invalidPurpose": "Некорректное назначение ячейки",
+      "palletTypeIdRequired": "Укажите тип ТН",
+      "transferFieldsRequired": "Укажите штрихкод товара, ячейки откуда/куда и количество",
+      "httpError": "Ошибка HTTP {status}",
+      "productNotFound": "Товар не найден",
+      "palletNotFound": "ТН не найден",
+      "palletAcceptedSelectAvailable": "ТН уже принят и ожидает размещения. Выберите носитель со статусом «Свободен».",
+      "palletAcceptedSelectOtherAvailable": "ТН уже принят и ожидает размещения. Выберите другой носитель со статусом «Свободен».",
+      "palletPlacedSelectAvailable": "ТН уже размещён. Для приёмки нужен носитель со статусом «Свободен».",
+      "palletAvailableRequiredForReceive": "Для приёмки нужен ТН со статусом «Свободен».",
+      "inboundDocumentUnavailable": "Документ приёмки недоступен",
+      "outboundDocumentUnavailable": "Документ отгрузки недоступен",
+      "serialNumberRequired": "Для товара нужен серийный номер",
+      "lotNumberRequired": "Для товара нужна партия",
+      "lotDateOneRequired": "Укажите дату производства или срок годности",
+      "lotDateMfgCalcFailed": "Не удалось рассчитать дату производства",
+      "lotDateBothRequired": "У номенклатуры не задан срок хранения — укажите дату производства и срок годности",
+      "locationNotFound": "Ячейка не найдена",
+      "locationRequired": "Укажите ячейку",
+      "locationNotFoundOrInactive": "Ячейка не найдена или неактивна",
+      "locationWrongType": "Ячейка «{code}» типа «{got}» недоступна для {purpose}. Нужна зона: {need}.",
+      "locationPurposeReceive": "приёмки",
+      "locationPurposePutaway": "размещения",
+      "locationPurposePick": "отбора",
+      "lotNotFound": "Партия не найдена",
+      "packageNotFound": "Упаковка не найдена",
+      "palletTypeNotFound": "Тип ТН не найден",
+      "palletCreateFailed": "Ошибка создания ТН",
+      "palletNotAccepted": "ТН ещё не принят. Завершите приёмку на ТСД — тогда паллета попадёт в размещение.",
+      "palletNoStock": "На ТН нет остатков",
+      "palletCurrentLocationUnknown": "Неизвестна текущая ячейка ТН",
+      "putawayManualOverrideForbidden": "Ручной выбор ячейки запрещён настройками",
+      "putawayPlanFailed": "Не удалось спланировать ячейку размещения",
+      "putawayPlannedNotStorage": "Плановая ячейка не относится к зоне хранения",
+      "palletAlreadyAtTarget": "ТН уже в целевой ячейке",
+      "palletNoStockForPutaway": "На ТН нет остатков для размещения",
+      "palletPlacedNoReReceive": "ТН уже размещён — повторная приёмка на него недоступна",
+      "completeReceiveAvailableOnly": "Завершить приёмку можно только на ТН со статусом «Свободен»",
+      "palletNoReceivedStock": "На ТН нет принятого товара — нельзя завершить приёмку",
+      "productIdRequired": "Укажите номенклатуру",
+      "unitIdRequired": "Укажите единицу",
+      "factorRequired": "Укажите коэффициент больше 0",
+      "unitNotFound": "Единица не найдена",
+      "createFailed": "Ошибка создания",
+      "inventoryFiltersRequired": "Задайте фильтры или выберите сводку",
+      "noData": "Нет данных"
+    },
+    "actions": {
+      "passwordTooShort": "Пароль должен быть не короче 8 символов",
+      "passwordTooWeak": "Пароль слишком простой",
+      "weakTsdApiKey": "API-ключ ТСД должен быть надёжным и не совпадать с типовым значением",
+      "inventoryFieldsRequired": "Укажите товар, ячейку и количество",
+      "entityNotFound": "Сущность не найдена",
+      "codeAndNameRequired": "Укажите код и название",
+      "unknownQuickCreateKind": "Неизвестный тип быстрого создания",
+      "nameRequired": "Укажите название"
+    },
+    "admin": {
+      "fillAllFieldsAndRole": "Заполните все поля и выберите роль",
+      "roleNotSpecified": "Роль не указана",
+      "roleNotFound": "Роль не найдена",
+      "roleCodeInvalid": "Код роли: латиница, цифры и _",
+      "roleNameRequired": "Укажите название роли",
+      "roleCodeExists": "Роль с таким кодом уже есть",
+      "systemRoleCannotDelete": "Системную роль нельзя удалить",
+      "roleHasUsers": "Нельзя удалить роль с назначенными пользователями",
+      "statusCodeInvalid": "Код статуса: латиница, заглавные буквы, цифры и _, например ON_HOLD",
+      "statusNameRequired": "Укажите название статуса",
+      "statusCodeExists": "Статус с кодом {code} уже существует",
+      "clearDbConfirm": "Для подтверждения введите слово ОЧИСТИТЬ или CLEAR"
+    },
+    "documents": {
+      "supplierRequired": "Выберите поставщика из контрагентов",
+      "supplierNotFound": "Поставщик не найден",
+      "expectedDateRequired": "Укажите ожидаемую дату поступления",
+      "addAtLeastOneLine": "Добавьте хотя бы одну строку товара",
+      "lineProductQty": "Строка {line}: заполните товар и количество",
+      "lineSelectPackage": "Строка {line}: выберите упаковку",
+      "lineSelectPackageForProduct": "Строка {line}: выберите упаковку для выбранного товара",
+      "lineSelectLot": "Строка {line}: выберите партию из справочника для товара",
+      "linesOnlyInDraft": "Добавлять строки можно только в статусе «Новый»",
+      "fillProductQty": "Заполните товар и количество",
+      "selectPackage": "Выберите упаковку",
+      "selectPackageForProduct": "Выберите упаковку для выбранного товара",
+      "selectLotForProduct": "Выберите партию из справочника для выбранного товара",
+      "documentAndStatusRequired": "Укажите документ и статус",
+      "statusTransitionNotSupported": "Переход статуса не поддерживается",
+      "statusTransitionUnavailable": "Такой переход статуса недоступен",
+      "addLineBeforeRelease": "Добавьте хотя бы одну строку перед отправкой в работу",
+      "customerNotFound": "Клиент не найден",
+      "lineProductLocationQty": "Строка {line}: заполните товар, ячейку и количество",
+      "notDraft": "Документ не черновик",
+      "fillProductLocationQty": "Заполните товар, ячейку и количество",
+      "alreadyPostedOrCancelled": "Уже проведён или отменён",
+      "noLines": "Нет строк",
+      "productAndLotRequired": "Укажите товар и номер партии",
+      "productNotFound": "Товар не найден",
+      "lotExistsForProduct": "Такая партия для товара уже есть",
+      "lotNotFound": "Партия не найдена",
+      "notFound": "Документ не найден",
+      "notSpecified": "Документ не указан",
+      "createNotSupported": "Создание не поддерживается",
+      "useCreateInbound": "Используйте createInboundDocument",
+      "useCreateOutbound": "Используйте createOutboundDocument",
+      "cancelledCannotEdit": "Отменённый документ нельзя изменить",
+      "cannotEditInStatus": "Документ нельзя изменить в текущем статусе",
+      "selectSupplier": "Выберите поставщика",
+      "operationsReadOnly": "Операции доступны только для чтения",
+      "noPalletsOnDocument": "Нет товарных носителей по документу — сначала примите товар на ТН",
+      "palletNotPlaced": "ТН {code} ещё не размещён",
+      "palletNotInStorage": "ТН {code} должен быть в ячейке зоны хранения"
+    },
+    "meta": {
+      "palletTypeRequired": "Укажите тип товарного носителя",
+      "packageNotFound": "Упаковка не найдена",
+      "notCustomDocument": "Не пользовательский документ",
+      "navItemNotFound": "Раздел меню не найден",
+      "entityCodeRequired": "Не указан код сущности",
+      "customOnlyEditable": "Редактировать можно только пользовательские справочники и документы",
+      "attributeCodeExists": "Атрибут с таким кодом уже есть",
+      "lineColumnsCustomOnly": "Колонки строк доступны только для пользовательских документов",
+      "refCatalogRequired": "Укажите справочник для ссылки",
+      "columnCodeExists": "Колонка с таким кодом уже есть",
+      "attributeNotFound": "Атрибут не найден",
+      "systemAttributeCannotDelete": "Системный атрибут нельзя удалить",
+      "fillField": "Заполните поле «{name}»",
+      "lineSectionNotConfigured": "Табличная часть не настроена",
+      "invalidEntityCode": "{label}: только латиница (a–z), цифры и _, начинается с буквы",
+      "noSystemHandler": "Системный обработчик не найден"
+    },
+    "nav": {
+      "nameRequired": "Укажите название",
+      "itemNotFound": "Пункт не найден",
+      "itemCodeExists": "Пункт с таким кодом уже есть"
+    },
+    "stock": {
+      "insufficientBalance": "Недостаточно остатка на локации/партии/ТН/упаковке"
+    },
+    "workflow": {
+      "workflowAndStatusRequired": "Укажите workflow и целевой статус",
+      "transitionNotSpecified": "Переход не указан"
+    },
+    "quickCreate": {
+      "skuNameUnitRequired": "Заполните артикул, название и единицу",
+      "skuExists": "Товар с таким артикулом уже есть",
+      "nameRequired": "Укажите название",
+      "lotsModuleDisabled": "Модуль партий выключен",
+      "productAndLotRequired": "Укажите товар и номер партии",
+      "productNotFound": "Товар не найден",
+      "lotExists": "Такая партия уже есть",
+      "codeNameRequired": "Заполните штрих-код и название",
+      "zoneRequired": "Укажите зону",
+      "cellCodeExists": "Ячейка с таким штрих-кодом уже есть",
+      "zoneNotFound": "Зона не найдена",
+      "dockNameRequired": "Укажите название рампы",
+      "transportPlateAndDriverRequired": "Укажите госномер и ФИО водителя"
+    },
+    "catalog": {
+      "productRequired": "Укажите номенклатуру",
+      "unitRequired": "Укажите единицу",
+      "factorPositive": "Укажите коэффициент больше 0",
+      "dockNameRequired": "Укажите название рампы",
+      "zoneNotFound": "Зона не найдена",
+      "transportPlateAndDriverRequired": "Укажите госномер и ФИО водителя",
+      "barcodeRequired": "Укажите штрих-код",
+      "zoneRequired": "Укажите зону",
+      "unitOfMeasureRequired": "Единица измерения обязательна",
+      "noLotsAccountingModelNotFound": "Модель учёта «Без партий» не найдена",
+      "palletBarcodeAllocateFailed": "Не удалось выделить уникальный штрихкод по шаблону. Проверьте шаблон типа ТН: нужны {TYPE} и номер, например {TYPE}-{####} или {TYPE}{NNNN}."
+    },
+    "receiving": {
+      "dockNotFoundOrInactive": "Рампа не найдена или неактивна",
+      "dockBusyInbound": "Рампа занята документом приёмки {number}",
+      "dockBusyOutbound": "Рампа занята документом отгрузки {number}"
+    },
+    "location": {
+      "aisleRequired": "Укажите проезд",
+      "zoneRequired": "Укажите зону",
+      "zoneNotFound": "Зона не найдена",
+      "tooManyCells": "Слишком много ячеек ({total}). Максимум {max}",
+      "barcodeExists": "Уже есть ячейки с такими штрих-кодами: {sample}"
+    },
+    "lot": {
+      "emptyNameTemplate": "Пустой шаблон имени партии",
+      "allocateFailed": "Не удалось выделить номер партии по шаблону. Проверьте шаблон модели учёта."
+    },
+    "permissions": {
+      "useCatalogViewPermission": "nsiPermissionForEntity: используйте catalogViewPermissionForEntity для справочников меню"
+    },
+    "modules": {
+      "unknown": "Неизвестный модуль: {code}"
+    },
+    "integration": {
+      "endpointUrlEmpty": "Не указан URL конечной точки",
+      "httpError": "Ошибка HTTP {status}",
+      "sendFailed": "Ошибка отправки",
+      "noActiveEndpoints": "Нет активных конечных точек интеграции",
+      "failed": "ошибка",
+      "invalidApiKey": "Некорректный API-ключ",
+      "unauthorized": "Требуется авторизация",
+      "invalidPayload": "Некорректные данные запроса",
+      "productUpsertFieldsRequired": "product.upsert: требуются sku и name",
+      "counterpartyUpsertFieldsRequired": "counterparty.upsert: требуются code и name",
+      "inboundCreateFieldsRequired": "inbound.create: требуются supplierName и lines[]",
+      "inboundProductNotFound": "inbound.create: товар не найден: {sku}",
+      "inboundNoValidLines": "inbound.create: нет корректных строк",
+      "outboundCreateFieldsRequired": "outbound.create: требуются customerName и lines[]",
+      "outboundNoShippingLocation": "outbound.create: не задана ячейка отгрузки по умолчанию",
+      "outboundProductNotFound": "outbound.create: товар не найден: {sku}",
+      "outboundNoValidLines": "outbound.create: нет корректных строк",
+      "locationUpsertCodeRequired": "location.upsert: требуется code",
+      "unsupportedEventType": "Неподдерживаемый eventType: {eventType}"
+    }
+  }
+}

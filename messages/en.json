@@ -1,0 +1,1821 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "logout": "Log out",
+    "language": "Language",
+    "russian": "Русский",
+    "english": "English",
+    "alwaysOn": "always on",
+    "warehouseDefault": "Warehouse"
+  },
+  "metadata": {
+    "description": "WMS — inventory flows and master data"
+  },
+  "login": {
+    "title": "Sign in",
+    "loginLabel": "Login",
+    "passwordLabel": "Password",
+    "submit": "Sign in",
+    "invalidCredentials": "Invalid login or password"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Warehouse parameters and module toggles.",
+    "warehouseSection": "Warehouse",
+    "warehouseName": "Name",
+    "warehouseCode": "Code",
+    "warehouseHint": "Shown in the browser tab as «Name · Code».",
+    "tsdSection": "TSD & accounting",
+    "tsdApiKey": "TSD API key",
+    "tsdApiKeyPlaceholder": "Generated on seed or set manually",
+    "allowNegativeStock": "Allow negative stock",
+    "overviewMovements": "Movements on overview",
+    "modulesSection": "Modules",
+    "languageSection": "Interface",
+    "languageHint": "Language for menus, buttons, and system labels. Database labels (statuses, meta) remain in the language they were created.",
+    "clearDbSection": "Database cleanup",
+    "clearDbDescription": "Removes user-created data: documents, stock, products, locations, zones, counterparties, custom menu sections, and constructor catalogs. Users, roles, warehouse settings, and predefined catalogs are kept.",
+    "clearDbConfirmLabel": "Type CLEAR to confirm",
+    "clearDbConfirmPlaceholder": "CLEAR",
+    "clearDbButton": "Clear database",
+    "clearDbConfirmMessage": "Clear user warehouse data? Are you sure?",
+    "registry": {
+      "allowNegativeStock": {
+        "title": "Allow negative stock"
+      },
+      "putawayAllowOverride": {
+        "title": "Allow manual location selection during putaway"
+      },
+      "tsdShowPutawayAfterReceive": {
+        "title": "«Go to putaway» button after receive on TSD"
+      },
+      "overviewRecentMovementsLimit": {
+        "title": "Recent movements limit on overview",
+        "description": "How many rows to show in the recent movements block on the home page"
+      },
+      "outboxAutoDrainMinutes": {
+        "title": "Auto-drain outbox (minutes)",
+        "description": "0 = disabled. Minimum interval between automatic outbox drains."
+      },
+      "outboxLastDrainAt": {
+        "title": "Last outbox drain timestamp"
+      }
+    }
+  },
+  "sidebar": {
+    "overview": "Overview",
+    "nsi": "Master data",
+    "inbound": "Inbound",
+    "outbound": "Outbound",
+    "inventory": "Inventory",
+    "operations": "Operations",
+    "admin": "Administration",
+    "tsd": "TSD",
+    "layoutToggleToList": "List view",
+    "layoutToggleToStack": "Icon grid view"
+  },
+  "modules": {
+    "nsi": "Master data",
+    "menus": "Custom interfaces",
+    "inbound": "Inbound",
+    "outbound": "Outbound",
+    "inventory": "Inventory",
+    "operations": "Operations",
+    "topology": "Topology",
+    "lots": "Lots",
+    "tsd": "TSD",
+    "admin": "Administration"
+  },
+  "navGroups": {
+    "nsi": "Master data",
+    "inboundFlow": "Inbound flow",
+    "outboundFlow": "Outbound flow",
+    "warehouse": "Warehouse",
+    "app": "Application",
+    "system": "System"
+  },
+  "units": {
+    "pcs": "pcs"
+  },
+  "enums": {
+    "DRAFT": "New",
+    "RELEASED": "Released",
+    "ACCEPTED": "Accepted",
+    "PLACED": "Placed",
+    "COMPLETED": "Placed",
+    "POSTED": "Posted",
+    "CANCELLED": "Cancelled",
+    "RECEIVING": "Receiving",
+    "STORAGE": "Storage",
+    "SHIPPING": "Shipping",
+    "QUARANTINE": "Quarantine",
+    "SUPPLIER": "Supplier",
+    "CUSTOMER": "Customer",
+    "BOTH": "Supplier and customer",
+    "RECEIPT": "Receipt",
+    "SHIPMENT": "Shipment",
+    "ADJUSTMENT": "Adjustment",
+    "TRANSFER": "Transfer",
+    "DAY": "Days",
+    "WEEK": "Weeks",
+    "MONTH": "Months",
+    "YEAR": "Years",
+    "AVAILABLE": "Available",
+    "FREE": "Free",
+    "BUSY": "Busy"
+  },
+  "status": {
+    "DRAFT": "New",
+    "RELEASED": "Released",
+    "AVAILABLE": "Available",
+    "ACCEPTED": "Accepted",
+    "PLACED": "Placed",
+    "COMPLETED": "Completed",
+    "POSTED": "Posted",
+    "CANCELLED": "Cancelled"
+  },
+  "seed": {
+    "roles": {
+      "admin": {
+        "name": "Administrator",
+        "description": "Full access"
+      }
+    },
+    "workflows": {
+      "inbound": "Inbound",
+      "outbound": "Outbound",
+      "operation": "Warehouse operations"
+    },
+    "workflowTriggers": {
+      "releaseToExecution": "Release to execution",
+      "cancel": "Cancel",
+      "returnToDraft": "Return to draft",
+      "receiveTsd": "Receive (TSD)",
+      "placed": "Placed",
+      "autoAllLinesPlaced": "Auto: all lines placed",
+      "placedLegacy": "Placed (legacy)",
+      "post": "Post",
+      "pickTsd": "Pick (TSD)",
+      "completed": "Completed"
+    },
+    "metaEntities": {
+      "units": { "name": "Unit of measure", "plural": "Units" },
+      "zones": { "name": "Zone", "plural": "Zones" },
+      "counterparties": { "name": "Counterparty", "plural": "Counterparties" },
+      "receiving_docks": { "name": "Dock", "plural": "Docks" },
+      "transport_units": { "name": "Transport", "plural": "Transport units" },
+      "packages": { "name": "Package", "plural": "Packages" },
+      "pallet_types": { "name": "HU type", "plural": "HU types" },
+      "pallets": { "name": "Handling unit", "plural": "Handling units" },
+      "cells": { "name": "Location", "plural": "Locations" },
+      "nomenclature": { "name": "Product", "plural": "Products" },
+      "accounting_models": { "name": "Accounting model", "plural": "Accounting models" },
+      "inbound": { "name": "Inbound document", "plural": "Inbound" },
+      "outbound": { "name": "Outbound document", "plural": "Outbound" },
+      "operation": { "name": "Operation", "plural": "Operations" }
+    }
+  },
+  "documents": {
+    "operationTypes": {
+      "RECEIVE_REPORT": "Receive report",
+      "PUTAWAY": "Putaway",
+      "TRANSFER": "Transfer",
+      "PICK": "Pick"
+    },
+    "inboundKinds": {
+      "PLANNED": "Planned",
+      "URGENT": "Urgent",
+      "RETURN": "Return",
+      "TRANSFER": "Inter-warehouse"
+    },
+    "outboundKinds": {
+      "PLANNED": "Planned",
+      "URGENT": "Urgent",
+      "RETURN": "Return",
+      "TRANSFER": "Inter-warehouse"
+    }
+  },
+  "nsi": {
+    "hub": {
+      "title": "Master data",
+      "description": "Warehouse catalogs: products, locations, handling units, and more.",
+      "recordCount": "{count} records",
+      "customCatalogCount": "{count} records · catalog",
+      "customDocumentCount": "{count} docs · document"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "nomenclature": "Products",
+      "counterparties": "Counterparties",
+      "receivingDocks": "Docks",
+      "transportUnits": "Transport",
+      "zones": "Zones",
+      "cells": "Locations",
+      "palletTypes": "HU types",
+      "pallets": "HUs",
+      "packages": "Packages",
+      "units": "Units",
+      "accountingModels": "Accounting models",
+      "labels": "Barcodes",
+      "topology": "Topology",
+      "lots": "Lots"
+    },
+    "cards": {
+      "nomenclature": {
+        "title": "Products",
+        "hint": "SKU, unit, packages"
+      },
+      "counterparties": {
+        "title": "Counterparties",
+        "hint": "Suppliers and customers"
+      },
+      "receivingDocks": {
+        "title": "Docks",
+        "hint": "Inbound and outbound docks"
+      },
+      "transportUnits": {
+        "title": "Transport",
+        "hint": "Vehicles and drivers"
+      },
+      "zones": {
+        "title": "Zones",
+        "hint": "Warehouse zones"
+      },
+      "cells": {
+        "title": "Locations",
+        "hint": "Address storage"
+      },
+      "palletTypes": {
+        "title": "HU types",
+        "hint": "EUR and other carrier types"
+      },
+      "pallets": {
+        "title": "Handling units",
+        "hint": "Pallets and other HUs"
+      },
+      "packages": {
+        "title": "Packages",
+        "hint": "Ratio, barcode, and dimensions"
+      },
+      "units": {
+        "title": "Base units",
+        "hint": "pcs, kg, L…"
+      },
+      "accountingModels": {
+        "title": "Accounting models",
+        "hint": "Stock accounting schemes"
+      },
+      "labels": {
+        "title": "Barcodes",
+        "hint": "Catalog and print on demand"
+      },
+      "topology": {
+        "title": "Topology",
+        "hint": "Warehouse layout and location placement"
+      },
+      "lots": {
+        "title": "Lots",
+        "hint": "Lots and expiry dates"
+      }
+    }
+  },
+  "admin": {
+    "hub": {
+      "title": "Administration",
+      "description": "Warehouse settings, users, metadata, and external system integration."
+    },
+    "tabs": {
+      "overview": "Overview",
+      "settings": "Settings",
+      "users": "Users",
+      "roles": "Roles",
+      "statuses": "Statuses",
+      "meta": "Metadata",
+      "nav": "Menu",
+      "integration": "Integration",
+      "putaway": "Putaway"
+    },
+    "cards": {
+      "settings": {
+        "title": "Settings",
+        "hint": "Warehouse, modules, TSD"
+      },
+      "users": {
+        "title": "Users",
+        "hint": "Accounts and roles"
+      },
+      "roles": {
+        "title": "Roles",
+        "hint": "Access permissions"
+      },
+      "statuses": {
+        "title": "Statuses",
+        "hint": "Document lifecycle"
+      },
+      "meta": {
+        "title": "Metadata",
+        "hint": "Catalogs and fields"
+      },
+      "nav": {
+        "title": "Menu",
+        "hint": "Sidebar items and icons"
+      },
+      "integration": {
+        "title": "Integration",
+        "hint": "ERP exchange and webhooks"
+      },
+      "putaway": {
+        "title": "Putaway rules",
+        "hint": "Rules and TSD behavior"
+      }
+    }
+  },
+  "permissions": {
+    "groups": {
+      "modules": "Modules",
+      "documents": "Documents",
+      "nsi": "Master data",
+      "customUi": "Custom interfaces",
+      "tsd": "TSD"
+    },
+    "codes": {
+      "module_inbound": {
+        "title": "Inbound (module)",
+        "viewDescription": "Deprecated — use document.inbound",
+        "writeDescription": "Deprecated — use document.inbound.write"
+      },
+      "module_inbound_write": {
+        "title": "Inbound (module) — edit",
+        "viewDescription": "Deprecated — use document.inbound.write",
+        "writeDescription": "Deprecated — use document.inbound.write"
+      },
+      "module_outbound": {
+        "title": "Outbound (module)",
+        "viewDescription": "Deprecated — use document.outbound",
+        "writeDescription": "Deprecated — use document.outbound.write"
+      },
+      "module_outbound_write": {
+        "title": "Outbound (module) — edit",
+        "viewDescription": "Deprecated — use document.outbound.write",
+        "writeDescription": "Deprecated — use document.outbound.write"
+      },
+      "module_inventory": {
+        "title": "Inventory",
+        "viewDescription": "View stock and reports",
+        "writeDescription": "Adjust stock and export"
+      },
+      "module_inventory_write": {
+        "title": "Inventory — edit",
+        "viewDescription": "Adjust stock and export",
+        "writeDescription": "Adjust stock and export"
+      },
+      "module_operations": {
+        "title": "Operations (module)",
+        "viewDescription": "Deprecated — use document.operation",
+        "writeDescription": "Deprecated — use document.operation.write"
+      },
+      "module_operations_write": {
+        "title": "Operations (module) — edit",
+        "viewDescription": "Deprecated — use document.operation.write",
+        "writeDescription": "Deprecated — use document.operation.write"
+      },
+      "module_admin": {
+        "title": "Administration",
+        "viewDescription": "View settings, users, and roles",
+        "writeDescription": "Change settings, users, and roles"
+      },
+      "module_admin_write": {
+        "title": "Administration — edit",
+        "viewDescription": "Change settings, users, and roles",
+        "writeDescription": "Change settings, users, and roles"
+      },
+      "module_topology": {
+        "title": "Topology",
+        "viewDescription": "View warehouse layout",
+        "writeDescription": "Edit warehouse layout"
+      },
+      "module_topology_write": {
+        "title": "Topology — edit",
+        "viewDescription": "Edit warehouse layout",
+        "writeDescription": "Edit warehouse layout"
+      },
+      "module_lots": {
+        "title": "Lots",
+        "viewDescription": "View lots and expiry dates",
+        "writeDescription": "Create and edit lots"
+      },
+      "module_lots_write": {
+        "title": "Lots — edit",
+        "viewDescription": "Create and edit lots",
+        "writeDescription": "Create and edit lots"
+      },
+      "document_inbound": {
+        "title": "Document: inbound",
+        "viewDescription": "View inbound documents",
+        "writeDescription": "Create and edit inbound documents"
+      },
+      "document_inbound_write": {
+        "title": "Document: inbound — edit",
+        "viewDescription": "Create and edit inbound documents",
+        "writeDescription": "Create and edit inbound documents"
+      },
+      "document_outbound": {
+        "title": "Document: outbound",
+        "viewDescription": "View outbound documents",
+        "writeDescription": "Create and edit outbound documents"
+      },
+      "document_outbound_write": {
+        "title": "Document: outbound — edit",
+        "viewDescription": "Create and edit outbound documents",
+        "writeDescription": "Create and edit outbound documents"
+      },
+      "document_operation": {
+        "title": "Document: operations",
+        "viewDescription": "View operations journal",
+        "writeDescription": "Create and edit warehouse operations"
+      },
+      "document_operation_write": {
+        "title": "Document: operations — edit",
+        "viewDescription": "Create and edit warehouse operations",
+        "writeDescription": "Create and edit warehouse operations"
+      },
+      "nsi_hub": {
+        "title": "Master data overview",
+        "viewDescription": "Master data section home page"
+      },
+      "nsi_nomenclature": {
+        "title": "Products",
+        "viewDescription": "SKU, packages, product cards"
+      },
+      "nsi_counterparties": {
+        "title": "Counterparties",
+        "viewDescription": "Suppliers and customers"
+      },
+      "nsi_receiving_docks": {
+        "title": "Docks",
+        "viewDescription": "Inbound and outbound docks"
+      },
+      "nsi_transport_units": {
+        "title": "Transport",
+        "viewDescription": "Vehicles and drivers"
+      },
+      "nsi_zones": {
+        "title": "Zones",
+        "viewDescription": "Warehouse zones"
+      },
+      "nsi_cells": {
+        "title": "Locations",
+        "viewDescription": "Address storage"
+      },
+      "nsi_pallet_types": {
+        "title": "HU types",
+        "viewDescription": "EUR and other carrier types"
+      },
+      "nsi_pallets": {
+        "title": "Handling units",
+        "viewDescription": "Pallets and handling units"
+      },
+      "nsi_packages": {
+        "title": "Packages",
+        "viewDescription": "Ratios and dimensions"
+      },
+      "nsi_units": {
+        "title": "Units",
+        "viewDescription": "Base units of measure"
+      },
+      "nsi_accounting_models": {
+        "title": "Accounting models",
+        "viewDescription": "Stock accounting schemes"
+      },
+      "nsi_labels": {
+        "title": "Barcodes",
+        "viewDescription": "Barcode catalog"
+      },
+      "module_tsd": {
+        "title": "TSD web interface",
+        "viewDescription": "Access to /tsd application"
+      },
+      "tsd_receive": {
+        "title": "Receive",
+        "viewDescription": "Receive against orders on terminal"
+      },
+      "tsd_putaway": {
+        "title": "Putaway",
+        "viewDescription": "Putaway accepted HUs"
+      },
+      "tsd_freePutawayScan": {
+        "title": "Free scan",
+        "viewDescription": "Putaway outside task list"
+      },
+      "tsd_pick": {
+        "title": "Pick",
+        "viewDescription": "Pick for shipment"
+      },
+      "tsd_transfer": {
+        "title": "Transfer",
+        "viewDescription": "Transfer between locations"
+      }
+    }
+  },
+  "components": {
+    "shared": {
+      "next": "Next",
+      "back": "Back",
+      "confirm": "Confirm",
+      "add": "Add",
+      "remove": "Remove",
+      "create": "Create",
+      "reset": "Reset",
+      "find": "Find",
+      "toList": "Back to list",
+      "details": "Details",
+      "lineDetails": "Line details",
+      "goods": "Items",
+      "status": "Status",
+      "lines": "Lines",
+      "search": "Search",
+      "type": "Type",
+      "allTypes": "All types",
+      "allStatuses": "All statuses",
+      "addLine": "Add line",
+      "createDocument": "Create document",
+      "filterPrefix": "Filter: {parts}",
+      "searchFilter": "search «{q}»",
+      "noRows": "No lines.",
+      "noRowsFiltered": "No matches for the filter.",
+      "noDocuments": "No documents yet.",
+      "noTasks": "No tasks or documents yet.",
+      "openDocument": "Open {number}",
+      "lineCount": "{count} lines",
+      "rowNo": "#",
+      "product": "Product",
+      "package": "Package",
+      "quantity": "Quantity",
+      "quantityShort": "Qty",
+      "base": "Base",
+      "lot": "Lot",
+      "location": "Location",
+      "number": "Number",
+      "who": "Who",
+      "when": "When",
+      "order": "Order",
+      "toOrder": "To order {number}",
+      "fromTo": "{from} → {to}",
+      "extraDetails": "Extra fields",
+      "extraShort": "Extra",
+      "selectProductFirst": "Select a product first",
+      "noPackages": "Product has no packages",
+      "selectPackage": "Select package",
+      "createNomenclature": "＋ Create product…",
+      "createLot": "＋ Create lot…",
+      "createCell": "＋ Create location…",
+      "createGeneric": "＋ Create…",
+      "baseUnit": "Base unit",
+      "packageQty": "Package qty",
+      "packageQtyRequired": "Package qty *",
+      "quantityRequired": "Quantity *",
+      "inBaseUnits": "In base units",
+      "withoutPackage": "No package (base units)",
+      "withoutPackageOrSelect": "No package or select one",
+      "selectPlaceholder": "— select —",
+      "loadError": "Load error",
+      "genericError": "Error",
+      "saving": "Saving…",
+      "codeRequired": "Code *",
+      "updated": "Updated",
+      "route": "From → To",
+      "pallet": "HU",
+      "destination": "To",
+      "place": "Put away",
+      "docks": "Docks",
+      "transport": "Transport",
+      "inboundOrder": "Inbound order",
+      "notes": "Reason / note",
+      "operationDocs": "Operation documents",
+      "tasksAndDocs": "Tasks and documents · {count}",
+      "quickFilters": "Quick filters",
+      "searchFilters": "Search and filters",
+      "all": "All",
+      "planned": "Planned",
+      "released": "To execute",
+      "completed": "Completed",
+      "packageQtyTitle": "Package quantity"
+    },
+    "ui": {
+      "dataTableEmpty": "No data."
+    },
+    "confirmForm": {
+      "defaultMessage": "Are you sure?"
+    },
+    "documentStatus": {
+      "status": "Status"
+    },
+    "metaFormField": {
+      "selectCounterparty": "— select counterparty —",
+      "createCounterparty": "＋ Create counterparty…",
+      "createDock": "＋ Create dock…",
+      "dockNotSelected": "— not selected —",
+      "createTransport": "＋ Create transport…",
+      "transportNotSelected": "— not selected —"
+    },
+    "metaRecord": {
+      "mainSection": "Main"
+    },
+    "moduleDisabled": {
+      "message": "Module «{moduleName}» is disabled. Enable it in settings when you are ready to continue.",
+      "toSettings": "Go to settings"
+    },
+    "docHandlers": {
+      "inbound": {
+        "title": "Inbound document",
+        "listTitle": "Inbound",
+        "listDescription": "Inbound documents: new → to execute → receive and put away.",
+        "searchPlaceholder": "Number, supplier, PO, waybill…"
+      },
+      "outbound": {
+        "title": "Outbound document",
+        "listTitle": "Outbound",
+        "listDescription": "Outbound documents: new → to execute → post.",
+        "searchPlaceholder": "Number, customer, SO, waybill…"
+      },
+      "operation": {
+        "listTitle": "Operations",
+        "listDescription": "Unified task log: putaway, transfer, pick, and reports.",
+        "searchPlaceholder": "Number, HU, order, note…"
+      }
+    },
+    "tsdDevice": {
+      "title": "Device identification",
+      "loading": "Loading…",
+      "name": "Name",
+      "apiKey": "TSD API key",
+      "apiKeyPlaceholder": "Copy from Settings → TSD",
+      "apiKeyMissing": "API key is not set. Get it from an administrator in Settings.",
+      "apiKeyRequired": "Enter the TSD API key",
+      "registerError": "Registration error",
+      "registered": "Device registered",
+      "saveRegister": "Save / register",
+      "defaultName": "TSD",
+      "deviceKey": "Device key"
+    },
+    "tsdScan": {
+      "title": "Scanning",
+      "product": "Product *",
+      "from": "From *",
+      "to": "To *",
+      "location": "Location *",
+      "quantity": "Quantity *",
+      "lot": "Lot",
+      "submitting": "Sending…",
+      "success": "Success",
+      "queue": "Queue: {count}",
+      "flushQueue": "Send queue",
+      "apiKeyMissing": "Configure the TSD API key on the Device page.",
+      "offlineQueued": "Offline — saved to queue ({count})",
+      "errorQueued": "Network/API error — saved to queue ({count})",
+      "offline": "Offline",
+      "httpError": "HTTP error {status}"
+    },
+    "tsdPutaway": {
+      "toPutaway": "To putaway",
+      "noPallets": "No received pallets. Complete receive on TSD first.",
+      "scanTn": "Scan HU",
+      "specifyTn": "Enter HU code",
+      "locationNotFound": "Location not found",
+      "placed": "Put away · {code}"
+    },
+    "tsdReceive": {
+      "selectOrder": "Select order",
+      "noOrders": "No orders to execute",
+      "cellRequired": "Location *",
+      "scanOrEnterCode": "Scan or enter code",
+      "scanPalletHint": "Scan the pallet (HU) label you are placing goods on.",
+      "tnPallet": "HU / pallet *",
+      "cellTitle": "Location {code}",
+      "scanProductHint": "Location {cell}. Scan product or package from the order.",
+      "productBarcode": "Product / package barcode",
+      "orOrderLine": "Or order line",
+      "lotInLine": "· lot {lot}",
+      "packageRequired": "Package *",
+      "stockFactor": "(×{factor} to stock)",
+      "createPackageOption": "＋ Create package…",
+      "factor": "Ratio *",
+      "factorPlaceholder": "e.g. 10",
+      "unit": "Unit *",
+      "createPackage": "Create package",
+      "packageCount": "Package quantity *",
+      "serialNumber": "Serial number *",
+      "serialPlaceholder": "Scan or enter serial number",
+      "lotRequired": "Lot *",
+      "lotOptional": "Lot",
+      "lotFromDoc": "From document: {hint}",
+      "enterLotNumber": "Enter lot number",
+      "shelfLifeOneDate": "Shelf life is set on the product — one date is enough; the other will be calculated.",
+      "shelfLifeBothDates": "Shelf life is not set on the product — enter both dates.",
+      "manufacturedDate": "Manufacturing date",
+      "manufacturedDateRequired": "Manufacturing date *",
+      "expiryDate": "Expiry date",
+      "expiryDateRequired": "Expiry date *",
+      "completePallet": "Complete receive on pallet",
+      "changePallet": "Change pallet",
+      "backToOrders": "Back to orders",
+      "progress": "Progress",
+      "allLinesReceived": "All lines received.",
+      "scanNextProduct": "Scan the next product if more remain on the order.",
+      "tnAccepted": "HU {code} accepted",
+      "whatNext": "What next? Scan the next carrier for this order or return to the menu.",
+      "nextCarrier": "Next carrier (HU)",
+      "toPutaway": "Go to putaway",
+      "toMainMenu": "Main menu",
+      "backToOrderSelect": "Back to order selection",
+      "defaultPackageName": "Package",
+      "specifyReceiveCell": "Enter receive location",
+      "cellWithZone": "Location {code} · zone «{zone}»",
+      "cellOnly": "Location {code}",
+      "cellUnavailable": "Location unavailable",
+      "scanTnLabel": "Scan the HU (pallet) label",
+      "tnAtCell": "HU {code} · location {cell}",
+      "productNotInOrder": "Product not found in selected order",
+      "productNotFound": "Product not found",
+      "selectProductFirst": "Select a product first",
+      "factorMustBePositive": "Enter a ratio greater than 0",
+      "specifyUnit": "Select a unit",
+      "packageNotCreated": "Package was not created",
+      "packageCreated": "Package {name} created",
+      "packageCreateError": "Failed to create package",
+      "createPackageOrSelect": "Create a package or select from the list first",
+      "selectPackage": "Select package",
+      "specifySerial": "Enter serial number",
+      "specifyLot": "Enter lot",
+      "specifyMfgOrExpiry": "Enter manufacturing or expiry date",
+      "specifyBothDatesNoShelfLife": "Product has no shelf life — enter manufacturing and expiry dates",
+      "specifyQuantity": "Enter quantity",
+      "scanOrSelectProduct": "Scan or select a product",
+      "orderFullyReceived": "Order fully received. You can complete receive on the pallet.",
+      "receivedOnPallet": "Received on {tn}: {qty} × {package}. Scan the next product or complete receive on the pallet.",
+      "palletAlreadyAccepted": "HU {code} was already accepted.",
+      "palletAcceptanceComplete": "Receive on {code} completed."
+    },
+    "quickCreate": {
+      "titles": {
+        "nomenclature": "New product",
+        "counterparty": "New counterparty",
+        "lot": "New lot",
+        "cell": "New location",
+        "unit": "New unit",
+        "zone": "New zone",
+        "receivingDock": "New dock",
+        "transportUnit": "New transport"
+      },
+      "hint": "You will stay on this page — the record appears in the list immediately.",
+      "sku": "SKU *",
+      "name": "Name *",
+      "unit": "Unit of measure *",
+      "barcode": "Barcode",
+      "counterpartyType": "Type",
+      "product": "Product *",
+      "selectedProduct": "Selected product",
+      "lotNumber": "Lot number *",
+      "expiryDate": "Expiry date",
+      "cellCode": "Barcode *",
+      "zone": "Zone *",
+      "symbol": "Symbol",
+      "storageType": "Storage type *",
+      "warehouseZone": "Warehouse zone",
+      "createZone": "＋ Create zone…",
+      "noZoneBinding": "— no zone —",
+      "note": "Note",
+      "plateNumber": "Vehicle plate *",
+      "driverName": "Driver name *",
+      "driverPhone": "Driver phone",
+      "driverLicense": "Driver license",
+      "passport": "Passport",
+      "carrier": "Carrier",
+      "lotProductRequired": "Enter product and lot number",
+      "nomenclatureRequired": "Fill in SKU, name, and unit",
+      "nameRequired": "Enter name",
+      "cellRequired": "Fill in barcode, name, and zone",
+      "dockNameRequired": "Enter dock name",
+      "transportRequired": "Enter plate number and driver name",
+      "saveError": "Save error"
+    },
+    "receivingDockLinkedDocs": {
+      "inboundTitle": "Linked inbound documents",
+      "outboundTitle": "Linked outbound documents"
+    },
+    "statusHistory": {
+      "title": "Status history",
+      "when": "When",
+      "from": "From",
+      "to": "To",
+      "source": "Source",
+      "who": "Who",
+      "note": "Note",
+      "sources": {
+        "web": "Web",
+        "tsd": "TSD",
+        "system": "System"
+      }
+    },
+    "inboundReceiveFact": {
+      "title": "Receive actuals",
+      "summary": "{lineCount} lines · {received} of {planned} in base units · {pallets} HU",
+      "postedSuffix": " · received {date}",
+      "close": "Close",
+      "factLines": "Actual lines",
+      "factLinesCount": "Actual lines ({count})",
+      "empty": "No actual lines."
+    },
+    "documentExtraFields": {
+      "createLabel": "＋ Create…"
+    },
+    "labelsBarcodeList": {
+      "hint": "Select barcodes in the list and click Print. Images are generated only for selected items.",
+      "search": "Search",
+      "searchPlaceholder": "Code, name, type…",
+      "labelType": "Label type",
+      "print": "Print",
+      "printCount": "Print · {count}",
+      "title": "Barcodes · {count}",
+      "colType": "Type",
+      "colObject": "Object",
+      "colBarcode": "Barcode",
+      "emptyFiltered": "No matches for your query.",
+      "emptyDefault": "No barcodes yet. Add products, locations, or handling units.",
+      "selectAria": "Select {code}",
+      "card": "Record"
+    },
+    "rackConfigForm": {
+      "configTitle": "Rack configuration",
+      "aisle": "Aisle *",
+      "zone": "Zone *",
+      "selectZone": "— select zone —",
+      "createZone": "＋ Create zone…",
+      "rackCount": "Racks *",
+      "levelCount": "Levels *",
+      "positionCount": "Positions per level *",
+      "barcodeTitle": "Barcode",
+      "template": "Template *",
+      "templateHint": "'{A}' — aisle, '{R}' — rack, '{L}' — level, '{P}' — position. Example: {preview}",
+      "nameTemplate": "Name template",
+      "nameTemplatePlaceholder": "Same as barcode if empty",
+      "willCreate": "Will create: {total} loc. (max. 500)",
+      "submit": "Create {total} loc."
+    },
+    "nomenclaturePackages": {
+      "title": "Packages",
+      "name": "Name",
+      "factor": "Ratio",
+      "unit": "Unit",
+      "barcodeShort": "BC",
+      "empty": "No packages yet — add one on the right.",
+      "newTitle": "New package",
+      "unitRequired": "Unit *",
+      "createUnit": "＋ Create unit…",
+      "factorRequired": "Ratio *",
+      "barcode": "Barcode",
+      "barcodePlaceholder": "Barcode for this package",
+      "add": "Add",
+      "editHint": "Edit package without leaving the catalog",
+      "close": "Close",
+      "saveError": "Save error",
+      "dimensions": "Dimensions",
+      "lengthMm": "Length, mm",
+      "widthMm": "Width, mm",
+      "heightMm": "Height, mm",
+      "weightGrossKg": "Gross weight, kg"
+    },
+    "nomenclatureAccounting": {
+      "model": "Accounting model",
+      "modelRequired": "Accounting model *",
+      "shelfLife": "Shelf life",
+      "shelfLifeUnit": "Shelf life unit",
+      "numberPlaceholder": "Number"
+    },
+    "createApiKey": {
+      "namePlaceholder": "Key name",
+      "defaultName": "Partner",
+      "submit": "Create key",
+      "created": "Key (copy now): {key}"
+    },
+    "createableSelect": {
+      "showAll": "Show all…",
+      "pickFromList": "Pick from list",
+      "kinds": {
+        "nomenclature": "Products",
+        "counterparty": "Counterparties",
+        "lot": "Lots",
+        "cell": "Locations",
+        "unit": "Units",
+        "zone": "Zones",
+        "receivingDock": "Docks",
+        "transportUnit": "Transport"
+      }
+    },
+    "showAllDialog": {
+      "defaultTitle": "Pick from list",
+      "hint": "Find a record and select it from the list.",
+      "searchPlaceholder": "Search…",
+      "loading": "Loading…",
+      "notFound": "Nothing found",
+      "close": "Close"
+    },
+    "sectionTabs": {
+      "ariaLabel": "Sections"
+    },
+    "englishCodeField": {
+      "label": "Code *",
+      "title": "Latin letters (a–z), digits, and _ only",
+      "hint": "Latin letters, digits, and _ only"
+    },
+    "accountingModelFlags": {
+      "hint": "Enable lot tracking first — then the other options become available.",
+      "useLots": "Lot tracking",
+      "useExpiry": "Expiry date",
+      "useSerial": "Serial numbers",
+      "lotNameTemplate": "Lot name template",
+      "templateHint": "'{SKU}', '{YYYYMMDD}', '{DATE}', '{EXPIRY}', '{####}', '{SERIAL}'. Empty — number is entered on TSD."
+    },
+    "printPageButton": {
+      "label": "Print page"
+    }
+  },
+  "dialogs": {
+    "admin": {
+      "users": {
+        "createButton": "Create user",
+        "title": "New user",
+        "description": "Local account with the selected role.",
+        "login": "Login *",
+        "name": "Name *",
+        "password": "Password *",
+        "role": "Role *",
+        "noRoles": "Create a role first"
+      },
+      "roles": {
+        "createButton": "Create role",
+        "title": "New role",
+        "description": "After creation, configure permissions via «Edit permissions» in the list.",
+        "code": "Code *",
+        "name": "Name *",
+        "descriptionLabel": "Description",
+        "namePlaceholder": "Supervisor",
+        "descriptionPlaceholder": "Brief role purpose",
+        "editPermissions": "Edit permissions",
+        "permissionsTitle": "Role permissions",
+        "permissionsDescription": "Permission changes apply on the next page navigation.",
+        "access": "Access",
+        "view": "View",
+        "editColumn": "Edit",
+        "emptyCustomUi": "No custom menu sections or catalogs. Create them in admin.",
+        "emptyGroup": "No permissions available in this group.",
+        "accessAria": "{title} — access",
+        "viewAria": "{title} — view",
+        "editAria": "{title} — edit"
+      },
+      "statuses": {
+        "createButton": "Create status",
+        "title": "New status",
+        "description": "Flows and colors are configured in the table after creation.",
+        "code": "Code *",
+        "name": "Name *",
+        "namePlaceholder": "On hold"
+      },
+      "meta": {
+        "createEntityButton": "Create catalog",
+        "createEntityTitle": "New custom catalog",
+        "createEntityDescription": "The catalog will appear in tabs of the selected menu section — like catalogs inside master data.",
+        "createDocumentButton": "Create document",
+        "createDocumentTitle": "New custom document",
+        "createDocumentDescription": "The document will appear in tabs of the selected menu section. By default — number, date, and comment; fields can be extended in metadata.",
+        "name": "Name *",
+        "pluralName": "Plural name",
+        "pluralNameEntityPlaceholder": "Brands",
+        "pluralNameDocumentPlaceholder": "Requests",
+        "pluralNameEntityHint": "List, tab, and card title in master data (e.g. «Brands»). If empty — same as name.",
+        "pluralNameDocumentHint": "List and tab title (e.g. «Requests»). If empty — same as name.",
+        "description": "Description",
+        "descriptionEntityPlaceholder": "Product manufacturers and brands",
+        "descriptionDocumentPlaceholder": "Internal purchase requests",
+        "descriptionEntityHint": "Short caption under the name on master data overview and in the menu section.",
+        "descriptionDocumentHint": "Short caption on master data overview and in the menu section.",
+        "navSection": "Menu section *",
+        "navSectionEntityHint": "The catalog opens in tabs at the top of the selected section.",
+        "withLines": "Line items (document rows)",
+        "nameEntityPlaceholder": "Brand",
+        "nameDocumentPlaceholder": "Request",
+        "editEntity": {
+          "code": "Code",
+          "codeHint": "Code cannot be changed after creation. Link: {href}",
+          "name": "Name *",
+          "pluralName": "Plural name",
+          "pluralNameHint": "List, tab, and card title in master data. If empty — same as «Name».",
+          "description": "Description",
+          "descriptionDocumentPlaceholder": "Internal purchase requests",
+          "descriptionEntityPlaceholder": "Product manufacturers and brands",
+          "descriptionHint": "Caption on master data overview and in the menu section.",
+          "navSection": "Menu section",
+          "navSectionHintDocument": "Where to show the document: in master data or in a custom section's tabs.",
+          "navSectionHintEntity": "Where to show the catalog: in master data or in a custom section's tabs.",
+          "withLines": "Line items (document rows)",
+          "withWorkflow": "Workflow (statuses and transitions)",
+          "saveProperties": "Save properties"
+        },
+        "addAttribute": {
+          "createButton": "Add attribute",
+          "title": "New attribute",
+          "code": "Code *",
+          "name": "Name *",
+          "section": "Section",
+          "type": "Type",
+          "refEntity": "Catalog reference (ref)",
+          "enumValues": "enum comma-separated",
+          "required": "Required",
+          "formVisible": "In form",
+          "listVisible": "In list",
+          "namePlaceholder": "Brand",
+          "add": "Add"
+        },
+        "addLineColumn": {
+          "createButton": "Add column",
+          "title": "New line column",
+          "code": "Code *",
+          "name": "Name *",
+          "type": "Type *",
+          "refEntity": "Catalog *",
+          "selectRef": "— select —",
+          "required": "Required",
+          "namePlaceholder": "Amount",
+          "add": "Add",
+          "fieldTypes": {
+            "string": "String",
+            "number": "Number",
+            "bool": "Yes/No",
+            "date": "Date",
+            "ref": "Reference"
+          }
+        }
+      },
+      "nav": {
+        "createButton": "Add item",
+        "createTitle": "New menu item",
+        "createDescription": "Left menu section. Catalogs are added inside it via «Metadata».",
+        "sectionCode": "Section code *",
+        "menuLabel": "Menu label *",
+        "menuLabelPlaceholder": "Partners",
+        "link": "Link",
+        "icon": "Icon",
+        "editTitle": "Edit menu item",
+        "active": "Active",
+        "menuPreviewTitle": "As in menu",
+        "iconAria": "Icon: {label}"
+      }
+    }
+  },
+  "pages": {
+    "common": {
+      "back": "Back",
+      "toList": "Back to list",
+      "create": "Create",
+      "creating": "Creating…",
+      "saving": "Saving…",
+      "adding": "Adding…",
+      "saveError": "Save error",
+      "createError": "Create error",
+      "show": "Show",
+      "reset": "Reset",
+      "edit": "Edit",
+      "delete": "Delete",
+      "product": "Product",
+      "nomenclature": "Products",
+      "lots": "Lots",
+      "toDocument": "To document",
+      "addLine": "Add line",
+      "editLineTitle": "Line {lineNo}: {title}",
+      "actions": "Actions",
+      "lines": "Lines",
+      "noLines": "No lines yet",
+      "openAria": "Open: {label}",
+      "openTask": "Open task: {sku}",
+      "openLot": "Open lot {number}",
+      "openCell": "Open location {code}",
+      "openOperation": "Open operation",
+      "recordsCount": "{count} records",
+      "catalogBadge": "{count} records · catalog",
+      "documentBadge": "{count} docs · document",
+      "yes": "Yes",
+      "no": "No",
+      "mainSection": "Main",
+      "createRef": "Create…",
+      "createNomenclature": "Create product…",
+      "predefinedSuffix": "predefined",
+      "newTitle": "New: {name}",
+      "editTitle": "Edit: {name}",
+      "lineTitle": "Line: {title}",
+      "allZones": "All zones",
+      "allModels": "All models",
+      "value": "Value",
+      "skuOrName": "SKU or name",
+      "code": "Code",
+      "number": "Number",
+      "truncatedWarning": "Not all rows shown. Refine filters.",
+      "paginationBack": "Back",
+      "paginationForward": "Forward",
+      "ok": "OK",
+      "active": "Active",
+      "disabled": "Disabled",
+      "enable": "Enable",
+      "disable": "Disable",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "systemRole": "system",
+      "open": "Open",
+      "signIn": "Sign in",
+      "nsi": "Master data",
+      "toSettings": "Go to settings",
+      "createCell": "Create location",
+      "createRack": "Create rack",
+      "quantity": "Quantity",
+      "details": "Details",
+      "showAllLots": "Show all lots",
+      "emptyCatalog": "No records yet",
+      "emptyDocuments": "No documents yet",
+      "result": "Result",
+      "zoneTypeReceiving": "Receiving",
+      "zoneTypeShipping": "Shipping",
+      "zoneTypeQuarantine": "Quarantine",
+      "zoneTypeStorage": "Storage"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "message": "You do not have permission to view this page.",
+      "linkToNsi": "Go to master data"
+    },
+    "moduleDisabled": {
+      "title": "Module disabled",
+      "message": "This module is disabled. Enable it in settings.",
+      "messageWithCode": "Module «{code}» is disabled. Enable it in settings."
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Flow summary and recent movements.",
+      "planned": "Planned",
+      "newOrders": "new orders",
+      "inProgress": "In progress",
+      "toExecuteWarehouse": "to execute in warehouse",
+      "toExecuteShort": "to execute",
+      "internalOperations": "Internal operations",
+      "newTasks": "new tasks",
+      "toExecute": "To execute",
+      "operationsHint": "putaway, transfer, pick",
+      "noFlows": "No active flows. Enable modules in",
+      "settingsLink": "settings",
+      "recentMovements": "Recent movements",
+      "movementsLimit": "last {limit}",
+      "when": "When",
+      "operation": "Operation",
+      "product": "Product",
+      "quantity": "Quantity",
+      "note": "Note",
+      "noMovements": "No movements yet"
+    },
+    "inventory": {
+      "title": "Inventory",
+      "description": "Stock by location, zone, and product. Grouping, filters, and export.",
+      "exportCsv": "Export CSV",
+      "exportExcel": "Export Excel",
+      "quickPresets": "Quick presets",
+      "byZone": "By zone",
+      "filters": "Filters",
+      "product": "Product",
+      "zone": "Zone",
+      "location": "Location",
+      "lot": "Lot",
+      "pallet": "HU",
+      "groupBy": "Group by",
+      "accountingModel": "Accounting model",
+      "metaAttr": "Attribute",
+      "expiringDays": "Expiry, days",
+      "emptyHint": "Set filters and click «Show».",
+      "noResults": "No data for selected filters.",
+      "package": "Package",
+      "packagesShort": "Pkg.",
+      "expiry": "Expiry",
+      "base": "Base",
+      "baseUnit": "Base unit",
+      "quantity": "Quantity",
+      "rows": "Rows",
+      "groupDetail": "Detail",
+      "groupProduct": "By product",
+      "groupZone": "Summary: zone × product",
+      "groupLocation": "Summary: location × product",
+      "presets": {
+        "summary-product": {
+          "label": "Summary by product",
+          "hint": "Totals by SKU"
+        },
+        "summary-zone": {
+          "label": "Summary by zone",
+          "hint": "Product × zone"
+        },
+        "summary-location": {
+          "label": "Summary by location",
+          "hint": "Product × location"
+        },
+        "expiring-7": {
+          "label": "Expiry < 7 days",
+          "hint": "Lots"
+        },
+        "expiring-30": {
+          "label": "Expiry < 30 days",
+          "hint": "Lots"
+        }
+      }
+    },
+    "topology": {
+      "title": "Topology",
+      "description": "Warehouse layout and location placement on the map.",
+      "nsiCells": "Master data locations",
+      "mapSize": "Map size",
+      "width": "Width",
+      "height": "Height",
+      "noCells": "No locations on the map. Create locations in the",
+      "noCellsLink": "locations catalog"
+    },
+    "labels": {
+      "title": "Barcodes",
+      "description": "Barcode catalog: products, locations, HUs. Print on demand."
+    },
+    "lots": {
+      "title": "Lots",
+      "description": "List of lots and their balances.",
+      "descriptionFiltered": "Lots for {sku} · {name}",
+      "newTitle": "New lot",
+      "lot": "Lot",
+      "product": "Product",
+      "lotNumber": "Lot number",
+      "expiryDate": "Expiry date",
+      "manufacturedAt": "Manufacturing date",
+      "manufacturedAtShort": "Mfg. date",
+      "manufactured": "Manufactured",
+      "createdAt": "Created",
+      "balance": "Balance",
+      "balancesByLocation": "Balances by location ({count})",
+      "zone": "Zone",
+      "location": "Location",
+      "pallet": "HU",
+      "package": "Package",
+      "quantity": "Quantity",
+      "noBalances": "No balances",
+      "recentMovements": "Recent movements",
+      "when": "When",
+      "type": "Type",
+      "from": "From",
+      "to": "To",
+      "note": "Note",
+      "noMovements": "No movements yet",
+      "expiry": "Expiry",
+      "locations": "Locations",
+      "empty": "No lots yet"
+    },
+    "tsd": {
+      "title": "TSD",
+      "receive": "Receive",
+      "putaway": "Putaway",
+      "pick": "Pick",
+      "transfer": "Transfer",
+      "device": "Device"
+    },
+    "doc": {
+      "newInbound": "New inbound order",
+      "newOutbound": "New outbound order"
+    },
+    "catalog": {
+      "rackTitle": "Create rack",
+      "palletStatusHint": "Status changes automatically during receive and putaway.",
+      "packageNameHint": "Name and code are generated automatically from product and ratio.",
+      "barcodeTemplateHint": "Label template: {TYPE} is type, {HASHES} is counter.",
+      "packageAutoHint": "Package name and barcode can be left empty — they will be generated on create.",
+      "palletNewHint": "Specify quantity per HU when creating."
+    },
+    "nsi": {
+      "title": "Master data",
+      "description": "Warehouse catalogs: products, locations, handling units, and more.",
+      "hubCards": {
+        "products": {
+          "title": "Products",
+          "hint": "SKU, unit, packages"
+        },
+        "counterparties": {
+          "title": "Counterparties",
+          "hint": "Suppliers and customers"
+        },
+        "receivingDocks": {
+          "title": "Docks",
+          "hint": "Inbound and outbound docks"
+        },
+        "transportUnits": {
+          "title": "Transport",
+          "hint": "Vehicles and drivers"
+        },
+        "zones": {
+          "title": "Zones",
+          "hint": "Warehouse zones"
+        },
+        "cells": {
+          "title": "Locations",
+          "hint": "Address storage"
+        },
+        "palletTypes": {
+          "title": "HU types",
+          "hint": "EUR and other carrier types"
+        },
+        "pallets": {
+          "title": "Handling units",
+          "hint": "Pallets and other HUs"
+        },
+        "packages": {
+          "title": "Packages",
+          "hint": "Ratio, barcode, and dimensions"
+        },
+        "units": {
+          "title": "Base units",
+          "hint": "pcs, kg, L…"
+        },
+        "accountingModels": {
+          "title": "Accounting models",
+          "hint": "Stock accounting schemes"
+        },
+        "labels": {
+          "title": "Barcodes",
+          "hint": "Catalog and print on demand"
+        },
+        "topology": {
+          "title": "Topology",
+          "hint": "Warehouse layout and location placement"
+        },
+        "lots": {
+          "title": "Lots",
+          "hint": "Lots and expiry dates"
+        }
+      }
+    },
+    "navHub": {
+      "description": "Catalogs and documents in this menu section.",
+      "empty": "This section has no catalogs or documents yet."
+    },
+    "admin": {
+      "title": "Administration",
+      "description": "Warehouse settings, users, metadata, and external system integration.",
+      "counts": {
+        "warehouse": "warehouse",
+        "rules": "rules"
+      },
+      "hubCards": {
+        "/settings": {
+          "title": "Settings",
+          "hint": "Warehouse, modules, TSD"
+        },
+        "/admin/users": {
+          "title": "Users",
+          "hint": "Accounts and roles"
+        },
+        "/admin/roles": {
+          "title": "Roles",
+          "hint": "Access permissions"
+        },
+        "/admin/statuses": {
+          "title": "Statuses",
+          "hint": "Document lifecycle"
+        },
+        "/admin/meta": {
+          "title": "Metadata",
+          "hint": "Catalogs and fields"
+        },
+        "/admin/nav": {
+          "title": "Menu",
+          "hint": "Sidebar items and icons"
+        },
+        "/admin/integration": {
+          "title": "Integration",
+          "hint": "ERP exchange and webhooks"
+        },
+        "/admin/putaway": {
+          "title": "Putaway rules",
+          "hint": "Rules and TSD behavior"
+        }
+      },
+      "users": {
+        "title": "Users",
+        "description": "Accounts and role assignment.",
+        "login": "Login",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status"
+      },
+      "roles": {
+        "title": "Roles",
+        "description": "Access permissions by role.",
+        "role": "Role",
+        "descriptionCol": "Description",
+        "users": "Users",
+        "deleteConfirm": "Delete role «{name}»?",
+        "deleteDisabledTitle": "Role assigned to {count} users"
+      },
+      "statuses": {
+        "title": "Statuses",
+        "description": "Names, colors, and document streams.",
+        "code": "Code",
+        "sample": "Sample",
+        "name": "Name",
+        "active": "Active",
+        "bg": "Background",
+        "fg": "Text",
+        "border": "Border",
+        "workflowHint": "Status transitions for documents and TSD operations.",
+        "from": "From",
+        "to": "To",
+        "guard": "Guard",
+        "triggers": "Triggers",
+        "noTransitions": "No transitions yet",
+        "fromEmpty": "— start —",
+        "toStatus": "— status —",
+        "noGuard": "No guard",
+        "buttonLabel": "Button label",
+        "tsdEvent": "TSD event",
+        "addTransition": "Add transition",
+        "guards": {
+          "hasLines": "Has lines",
+          "readyToPlace": "Ready to place"
+        },
+        "triggerKinds": {
+          "manual": "Manual",
+          "tsd": "TSD",
+          "auto": "Auto",
+          "integration": "Integration"
+        },
+        "fieldTypes": {
+          "string": "String",
+          "number": "Number",
+          "bool": "Boolean",
+          "date": "Date",
+          "enum": "Enum",
+          "ref": "Reference"
+        },
+        "streams": {
+          "forInbound": {
+            "label": "Inbound",
+            "title": "Inbound documents"
+          },
+          "forOutbound": {
+            "label": "Outbound",
+            "title": "Outbound documents"
+          },
+          "forPutaway": {
+            "label": "Putaway",
+            "title": "Putaway and transfer"
+          },
+          "forPallet": {
+            "label": "HU",
+            "title": "Handling unit status"
+          },
+          "forTransfer": {
+            "label": "Transfer",
+            "title": "Internal transfers"
+          }
+        }
+      },
+      "meta": {
+        "title": "Metadata",
+        "description": "Constructor catalogs, documents, and fields.",
+        "code": "Code",
+        "name": "Name",
+        "kind": "Kind",
+        "storage": "Storage",
+        "attributes": "Fields",
+        "open": "Open",
+        "document": "Document",
+        "catalog": "Catalog",
+        "toList": "Back to list",
+        "openDocuments": "Open documents",
+        "openCatalog": "Open catalog",
+        "lineColumns": "Line columns",
+        "lineColumnsAuto": "Columns are set automatically for system documents.",
+        "attrCode": "Field code",
+        "attrName": "Name",
+        "type": "Type",
+        "required": "Required",
+        "noLineColumns": "No columns yet",
+        "section": "Section",
+        "requiredShort": "Req.",
+        "form": "Form",
+        "list": "List",
+        "fieldType": "Field type",
+        "systemField": "system",
+        "extensionField": "extension",
+        "addAttrHintDocument": "Add field to document",
+        "addAttrHintSystem": "Add custom field to system catalog",
+        "addAttrHintCustom": "Add field to catalog",
+        "deleteAttrConfirm": "Delete field «{name}»?",
+        "ariaName": "Name",
+        "ariaSection": "Section",
+        "ariaRequired": "Required",
+        "ariaFormVisible": "In form",
+        "ariaListVisible": "In list",
+        "tooltipSystemField": "Built-in entity field, cannot be deleted",
+        "tooltipExtensionField": "Extension field, values stored in EAV"
+      },
+      "nav": {
+        "title": "Menu",
+        "description": "Sidebar items: order, labels, and icons.",
+        "empty": "No menu items yet",
+        "item": "Item",
+        "preview": "Preview",
+        "icon": "Icon",
+        "deleteConfirm": "Delete item «{label}»?"
+      },
+      "integration": {
+        "title": "Integration",
+        "description": "External system exchange, webhooks, and API keys.",
+        "drainOutbox": "Drain outbox",
+        "retryInbox": "Retry inbox",
+        "retryOutbox": "Retry outbox",
+        "webhookSection": "Webhook",
+        "url": "URL",
+        "hmacSecret": "HMAC secret",
+        "active": "Active",
+        "saveWebhook": "Save webhook",
+        "oneCSection": "1C",
+        "secret": "Secret",
+        "saveOneC": "Save 1C",
+        "apiKeys": "API keys",
+        "keyName": "Name",
+        "prefix": "Prefix",
+        "status": "Status",
+        "inactive": "Inactive",
+        "outboxRecent": "Recent outbox events",
+        "event": "Event",
+        "aggregate": "Aggregate",
+        "attempts": "Attempts",
+        "error": "Error",
+        "inboxRecent": "Recent inbox events",
+        "source": "Source",
+        "type": "Type",
+        "externalId": "External ID"
+      },
+      "putaway": {
+        "title": "Putaway rules",
+        "description": "Cell selection rule priorities and TSD behavior.",
+        "priority": "Priority",
+        "enabled": "Enabled",
+        "behavior": "TSD behavior",
+        "manualOverride": "Allow manual location selection",
+        "manualOverrideHint": "Operator can choose a different location during putaway.",
+        "putawayAfterReceive": "«Go to putaway» button after receive",
+        "putawayAfterReceiveHint": "Show putaway transition immediately after receive on TSD.",
+        "rules": {
+          "same_product": {
+            "title": "To same product",
+            "description": "Storage location that already holds at least one product on the HU."
+          },
+          "empty_cell": {
+            "title": "To empty location",
+            "description": "Free storage location with no stock."
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "api": {
+      "moduleDisabled": "Module disabled",
+      "unauthorized": "Unauthorized",
+      "loginRequired": "Sign in required",
+      "forbidden": "Insufficient permissions for this operation",
+      "apiKeyNotConfigured": "TSD API key is not configured",
+      "internal": "Internal error",
+      "invalidPayload": "Invalid request payload",
+      "sessionNotFound": "Session not found",
+      "deviceKeyRequired": "Device key is required",
+      "idRequired": "ID is required",
+      "productLocationQtyRequired": "Product, location, and quantity are required",
+      "documentIdRequired": "Document is required",
+      "palletRequired": "Handling unit (HU) is required",
+      "barcodeOrSkuRequired": "Barcode or SKU is required",
+      "codeOrBarcodeRequired": "Location code or barcode is required",
+      "invalidPurpose": "Invalid location purpose",
+      "palletTypeIdRequired": "HU type is required",
+      "transferFieldsRequired": "Product barcode, from/to locations, and quantity are required",
+      "httpError": "HTTP error {status}",
+      "productNotFound": "Product not found",
+      "palletNotFound": "Handling unit not found",
+      "palletAcceptedSelectAvailable": "HU is already accepted and awaiting putaway. Select a unit with status \"Available\".",
+      "palletAcceptedSelectOtherAvailable": "HU is already accepted and awaiting putaway. Select another unit with status \"Available\".",
+      "palletPlacedSelectAvailable": "HU is already placed. Receiving requires a unit with status \"Available\".",
+      "palletAvailableRequiredForReceive": "Receiving requires an HU with status \"Available\".",
+      "inboundDocumentUnavailable": "Inbound document is not available",
+      "outboundDocumentUnavailable": "Outbound document is not available",
+      "serialNumberRequired": "Serial number is required for this product",
+      "lotNumberRequired": "Lot number is required for this product",
+      "lotDateOneRequired": "Enter manufacturing date or expiry date",
+      "lotDateMfgCalcFailed": "Could not calculate manufacturing date",
+      "lotDateBothRequired": "Product has no shelf life — enter both manufacturing and expiry dates",
+      "locationNotFound": "Location not found",
+      "locationRequired": "Location is required",
+      "locationNotFoundOrInactive": "Location not found or inactive",
+      "locationWrongType": "Location \"{code}\" of type \"{got}\" is not available for {purpose}. Required zone: {need}.",
+      "locationPurposeReceive": "receiving",
+      "locationPurposePutaway": "putaway",
+      "locationPurposePick": "picking",
+      "lotNotFound": "Lot not found",
+      "packageNotFound": "Package not found",
+      "palletTypeNotFound": "HU type not found",
+      "palletCreateFailed": "Failed to create handling unit",
+      "palletNotAccepted": "HU is not accepted yet. Complete receiving on the TSD — then the pallet will be available for putaway.",
+      "palletNoStock": "No stock on handling unit",
+      "palletCurrentLocationUnknown": "Current HU location is unknown",
+      "putawayManualOverrideForbidden": "Manual location selection is disabled in settings",
+      "putawayPlanFailed": "Could not plan putaway location",
+      "putawayPlannedNotStorage": "Planned location is not in a storage zone",
+      "palletAlreadyAtTarget": "HU is already at the target location",
+      "palletNoStockForPutaway": "No stock on HU for putaway",
+      "palletPlacedNoReReceive": "HU is already placed — receiving onto it again is not allowed",
+      "completeReceiveAvailableOnly": "Receiving can only be completed on an HU with status \"Available\"",
+      "palletNoReceivedStock": "No received stock on HU — cannot complete receiving",
+      "productIdRequired": "Product is required",
+      "unitIdRequired": "Unit is required",
+      "factorRequired": "Enter a factor greater than 0",
+      "unitNotFound": "Unit not found",
+      "createFailed": "Create failed",
+      "inventoryFiltersRequired": "Set filters or select a summary",
+      "noData": "No data"
+    },
+    "actions": {
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordTooWeak": "Password is too weak",
+      "weakTsdApiKey": "TSD API key must be a strong non-default value",
+      "inventoryFieldsRequired": "Product, location, and quantity are required",
+      "entityNotFound": "Entity not found",
+      "codeAndNameRequired": "Code and name are required",
+      "unknownQuickCreateKind": "Unknown quick create kind",
+      "nameRequired": "Name is required"
+    },
+    "admin": {
+      "fillAllFieldsAndRole": "Fill in all fields and select a role",
+      "roleNotSpecified": "Role is not specified",
+      "roleNotFound": "Role not found",
+      "roleCodeInvalid": "Role code: Latin letters, digits, and _",
+      "roleNameRequired": "Enter a role name",
+      "roleCodeExists": "A role with this code already exists",
+      "systemRoleCannotDelete": "System roles cannot be deleted",
+      "roleHasUsers": "Cannot delete a role with assigned users",
+      "statusCodeInvalid": "Status code: uppercase Latin letters, digits, and _, e.g. ON_HOLD",
+      "statusNameRequired": "Enter a status name",
+      "statusCodeExists": "Status with code {code} already exists",
+      "clearDbConfirm": "Type CLEAR or ОЧИСТИТЬ to confirm"
+    },
+    "documents": {
+      "supplierRequired": "Select a supplier from counterparties",
+      "supplierNotFound": "Supplier not found",
+      "expectedDateRequired": "Enter the expected receipt date",
+      "addAtLeastOneLine": "Add at least one product line",
+      "lineProductQty": "Line {line}: fill in product and quantity",
+      "lineSelectPackage": "Line {line}: select a package",
+      "lineSelectPackageForProduct": "Line {line}: select a package for the chosen product",
+      "lineSelectLot": "Line {line}: select a lot from the catalog for the product",
+      "linesOnlyInDraft": "Lines can only be added in New status",
+      "fillProductQty": "Fill in product and quantity",
+      "selectPackage": "Select a package",
+      "selectPackageForProduct": "Select a package for the chosen product",
+      "selectLotForProduct": "Select a lot from the catalog for the chosen product",
+      "documentAndStatusRequired": "Document and status are required",
+      "statusTransitionNotSupported": "Status transition is not supported",
+      "statusTransitionUnavailable": "This status transition is not available",
+      "addLineBeforeRelease": "Add at least one line before releasing to work",
+      "customerNotFound": "Customer not found",
+      "lineProductLocationQty": "Line {line}: fill in product, location, and quantity",
+      "notDraft": "Document is not a draft",
+      "fillProductLocationQty": "Fill in product, location, and quantity",
+      "alreadyPostedOrCancelled": "Already posted or cancelled",
+      "noLines": "No lines",
+      "productAndLotRequired": "Product and lot number are required",
+      "productNotFound": "Product not found",
+      "lotExistsForProduct": "This lot already exists for the product",
+      "lotNotFound": "Lot not found",
+      "notFound": "Document not found",
+      "notSpecified": "Document is not specified",
+      "createNotSupported": "Creation is not supported",
+      "useCreateInbound": "Use createInboundDocument",
+      "useCreateOutbound": "Use createOutboundDocument",
+      "cancelledCannotEdit": "Cancelled documents cannot be edited",
+      "cannotEditInStatus": "Document cannot be edited in the current status",
+      "selectSupplier": "Select a supplier",
+      "operationsReadOnly": "Operations are read-only",
+      "noPalletsOnDocument": "No handling units on the document — receive goods onto HUs first",
+      "palletNotPlaced": "HU {code} is not placed yet",
+      "palletNotInStorage": "HU {code} must be in a storage zone location"
+    },
+    "meta": {
+      "palletTypeRequired": "Handling unit type is required",
+      "packageNotFound": "Package not found",
+      "notCustomDocument": "Not a custom document",
+      "navItemNotFound": "Menu section not found",
+      "entityCodeRequired": "Entity code is not specified",
+      "customOnlyEditable": "Only custom catalogs and documents can be edited",
+      "attributeCodeExists": "An attribute with this code already exists",
+      "lineColumnsCustomOnly": "Line columns are only available for custom documents",
+      "refCatalogRequired": "Select a catalog for the reference",
+      "columnCodeExists": "A column with this code already exists",
+      "attributeNotFound": "Attribute not found",
+      "systemAttributeCannotDelete": "System attributes cannot be deleted",
+      "fillField": "Fill in field «{name}»",
+      "lineSectionNotConfigured": "Line section is not configured",
+      "invalidEntityCode": "{label}: only Latin letters (a–z), digits, and _, must start with a letter",
+      "noSystemHandler": "System handler not found"
+    },
+    "nav": {
+      "nameRequired": "Name is required",
+      "itemNotFound": "Item not found",
+      "itemCodeExists": "An item with this code already exists"
+    },
+    "stock": {
+      "insufficientBalance": "Insufficient stock at location/lot/HU/package"
+    },
+    "workflow": {
+      "workflowAndStatusRequired": "Workflow and target status are required",
+      "transitionNotSpecified": "Transition is not specified"
+    },
+    "quickCreate": {
+      "skuNameUnitRequired": "SKU, name, and unit are required",
+      "skuExists": "A product with this SKU already exists",
+      "nameRequired": "Name is required",
+      "lotsModuleDisabled": "Lots module is disabled",
+      "productAndLotRequired": "Product and lot number are required",
+      "productNotFound": "Product not found",
+      "lotExists": "This lot already exists",
+      "codeNameRequired": "Barcode and name are required",
+      "zoneRequired": "Zone is required",
+      "cellCodeExists": "A location with this barcode already exists",
+      "zoneNotFound": "Zone not found",
+      "dockNameRequired": "Dock name is required",
+      "transportPlateAndDriverRequired": "License plate and driver name are required"
+    },
+    "catalog": {
+      "productRequired": "Product is required",
+      "unitRequired": "Unit is required",
+      "factorPositive": "Enter a factor greater than 0",
+      "dockNameRequired": "Dock name is required",
+      "zoneNotFound": "Zone not found",
+      "transportPlateAndDriverRequired": "License plate and driver name are required",
+      "barcodeRequired": "Barcode is required",
+      "zoneRequired": "Zone is required",
+      "unitOfMeasureRequired": "Unit of measure is required",
+      "noLotsAccountingModelNotFound": "Accounting model «No lots» not found",
+      "palletBarcodeAllocateFailed": "Could not allocate a unique barcode from the template. Check the HU type template: it needs {TYPE} and a sequence, e.g. {TYPE}-{####} or {TYPE}{NNNN}."
+    },
+    "receiving": {
+      "dockNotFoundOrInactive": "Dock not found or inactive",
+      "dockBusyInbound": "Dock is occupied by inbound document {number}",
+      "dockBusyOutbound": "Dock is occupied by outbound document {number}"
+    },
+    "location": {
+      "aisleRequired": "Aisle is required",
+      "zoneRequired": "Zone is required",
+      "zoneNotFound": "Zone not found",
+      "tooManyCells": "Too many locations ({total}). Maximum is {max}",
+      "barcodeExists": "Locations with these barcodes already exist: {sample}"
+    },
+    "lot": {
+      "emptyNameTemplate": "Lot name template is empty",
+      "allocateFailed": "Could not allocate a lot number from the template. Check the accounting model template."
+    },
+    "permissions": {
+      "useCatalogViewPermission": "nsiPermissionForEntity: use catalogViewPermissionForEntity for menu catalogs"
+    },
+    "modules": {
+      "unknown": "Unknown module: {code}"
+    },
+    "integration": {
+      "endpointUrlEmpty": "Endpoint URL is empty",
+      "httpError": "HTTP error {status}",
+      "sendFailed": "Send failed",
+      "noActiveEndpoints": "No active integration endpoints",
+      "failed": "failed",
+      "invalidApiKey": "Invalid API key",
+      "unauthorized": "Unauthorized",
+      "invalidPayload": "Invalid request payload",
+      "productUpsertFieldsRequired": "product.upsert: sku and name required",
+      "counterpartyUpsertFieldsRequired": "counterparty.upsert: code and name required",
+      "inboundCreateFieldsRequired": "inbound.create: supplierName and lines[] required",
+      "inboundProductNotFound": "inbound.create: product not found: {sku}",
+      "inboundNoValidLines": "inbound.create: no valid lines",
+      "outboundCreateFieldsRequired": "outbound.create: customerName and lines[] required",
+      "outboundNoShippingLocation": "outbound.create: no default shipping location",
+      "outboundProductNotFound": "outbound.create: product not found: {sku}",
+      "outboundNoValidLines": "outbound.create: no valid lines",
+      "locationUpsertCodeRequired": "location.upsert: code required",
+      "unsupportedEventType": "Unsupported eventType: {eventType}"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Settings" ADD COLUMN "moduleMenus" BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE "Settings" ADD COLUMN "moduleOperations" BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE "Settings" ADD COLUMN "moduleTsd" BOOLEAN NOT NULL DEFAULT true;

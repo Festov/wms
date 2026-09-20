@@ -1,0 +1,1035 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum LocationType {
+  RECEIVING
+  STORAGE
+  SHIPPING
+  QUARANTINE
+}
+
+enum CounterpartyKind {
+  SUPPLIER
+  CUSTOMER
+  BOTH
+}
+
+enum MovementType {
+  RECEIPT
+  SHIPMENT
+  ADJUSTMENT
+  TRANSFER
+}
+
+enum ShelfLifeUnit {
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+/// Тип документа складской операции (кто / что / куда / зачем).
+enum OperationDocType {
+  RECEIVE_REPORT
+  PUTAWAY
+  TRANSFER
+  PICK
+}
+
+/// Справочник статусов документов и операций (с флагами потоков).
+model Status {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  name         String
+  /// JSON: { "ru": "...", "en": "..." } — локализованные подписи поверх name
+  labelsJson   String?
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  isSystem     Boolean  @default(false)
+  forInbound   Boolean  @default(false)
+  forOutbound  Boolean  @default(false)
+  forPutaway   Boolean  @default(false)
+  forPallet    Boolean  @default(false)
+  forTransfer  Boolean  @default(false)
+  colorBg      String?
+  colorFg      String?
+  colorBorder  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Workflow статусов для сущности (приёмка, отгрузка, операции…).
+model StatusWorkflow {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  name       String
+  /// MetaEntity code: inbound, outbound, operation
+  entityCode String?
+  /// document | operation | pallet
+  appliesTo  String   @default("document")
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  transitions StatusTransition[]
+}
+
+model StatusTransition {
+  id             String  @id @default(cuid())
+  workflowId     String
+  /// null = начальное состояние (создание документа)
+  fromStatusCode String?
+  toStatusCode   String
+  sortOrder      Int     @default(0)
+  /// JSON: { "guard": "allLinesPlaced" | "hasLines" | "none" }
+  guardConfig    String?
+
+  workflow StatusWorkflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  triggers StatusTrigger[]
+
+  @@unique([workflowId, fromStatusCode, toStatusCode])
+  @@index([workflowId])
+}
+
+model StatusTrigger {
+  id           String  @id @default(cuid())
+  transitionId String
+  /// manual | tsd | auto | integration
+  kind         String
+  /// JSON: { "event": "receive.complete" }, { "guard": "..." }
+  config       String?
+  requiredPerm String?
+  label        String?
+  sortOrder    Int     @default(0)
+
+  transition StatusTransition @relation(fields: [transitionId], references: [id], onDelete: Cascade)
+
+  @@index([transitionId])
+}
+
+/// Модель учёта номенклатуры: партии, срок годности, серийные номера.
+model AccountingModel {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  name            String
+  /// Учёт по партиям
+  useLots         Boolean  @default(false)
+  /// Учитывать срок годности (имеет смысл вместе с партиями)
+  useExpiry       Boolean  @default(false)
+  /// Учёт по серийным номерам (номер = идентификатор партии)
+  useSerial       Boolean  @default(false)
+  /// Шаблон имени партии: {SKU}, {YYYYMMDD}, {DATE}, {EXPIRY}, {####}, {SERIAL}
+  lotNameTemplate String?
+  isActive        Boolean  @default(true)
+  /// Предопределённая запись — код не меняем
+  isSystem        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  products Product[]
+}
+
+model Settings {
+  id                    Int      @id @default(1)
+  warehouseName         String   @default("Склад")
+  warehouseCode         String   @default("WH-01")
+  defaultReceivingLocId String?
+  defaultShippingLocId  String?
+  allowNegativeStock    Boolean  @default(false)
+  tsdApiKey             String   @default("")
+  topologyWidth         Int      @default(1200)
+  topologyHeight        Int      @default(800)
+  /// Modules
+  moduleInbound         Boolean  @default(true)
+  moduleOutbound        Boolean  @default(true)
+  moduleTopology        Boolean  @default(true)
+  moduleLots            Boolean  @default(true)
+  moduleMenus           Boolean  @default(true)
+  moduleOperations      Boolean  @default(true)
+  moduleTsd             Boolean  @default(true)
+  /// Putaway
+  putawayAllowOverride  Boolean  @default(true)
+  /// Показывать кнопку «К размещению» после завершения приёмки на паллете (ТСД)
+  tsdShowPutawayAfterReceive Boolean @default(true)
+  /// JSON-массив ключей порядка левого меню: /, nsi, nav:…, inbound, …
+  sidebarNavOrder         String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Unit {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  name      String
+  symbol    String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  products  Product[]
+  packages  Package[]
+}
+
+model Package {
+  id             String   @id @default(cuid())
+  code           String   @unique
+  name           String
+  /// Номенклатура, к которой относится упаковка
+  productId      String
+  unitId         String
+  /// Сколько базовых единиц в одной упаковке
+  factor         Float    @default(1)
+  lengthMm       Float?
+  widthMm        Float?
+  heightMm       Float?
+  weightNetKg    Float?
+  weightGrossKg  Float?
+  volumeM3       Float?
+  barcode        String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  product      Product       @relation(fields: [productId], references: [id])
+  unit         Unit          @relation(fields: [unitId], references: [id])
+  inboundLines InboundLine[]
+  outboundLines OutboundLine[]
+  balances     StockBalance[]
+  movements    StockMovement[]
+  operationLines OperationLine[]
+
+  @@index([productId])
+  @@index([barcode])
+}
+
+model Counterparty {
+  id        String           @id @default(cuid())
+  code      String           @unique
+  name      String
+  kind      CounterpartyKind @default(BOTH)
+  inn       String?
+  kpp       String?
+  phone     String?
+  email     String?
+  address   String?
+  isActive  Boolean          @default(true)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model Zone {
+  id        String       @id @default(cuid())
+  code      String       @unique
+  name      String
+  /// Тип хранения зоны (ячейки наследуют при создании)
+  type      LocationType @default(STORAGE)
+  color     String       @default("#0b6e4f")
+  notes     String?
+  isActive  Boolean      @default(true)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  cells          Location[]
+  receivingDocks ReceivingDock[]
+}
+
+model PalletType {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  name            String
+  /// Шаблон штрихкода: {TYPE}, {####} / {NNNN}, {SEQ:4}
+  barcodeTemplate String?
+  lengthMm        Float?
+  widthMm         Float?
+  heightMm        Float?
+  maxWeightKg     Float?
+  weightOwnKg     Float?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  pallets   Pallet[]
+  locations Location[]
+}
+
+model Pallet {
+  id           String       @id @default(cuid())
+  code         String       @unique
+  barcode      String?
+  palletTypeId String
+  locationId   String?
+  /// AVAILABLE — свободен; ACCEPTED — принят; PLACED — размещён (коды из Status)
+  status       String   @default("AVAILABLE")
+  notes        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  palletType PalletType      @relation(fields: [palletTypeId], references: [id])
+  location   Location?       @relation(fields: [locationId], references: [id])
+  balances   StockBalance[]
+  inboundLines InboundLine[]
+  movements  StockMovement[]
+  sessions   TsdTaskSession[]
+  operationDocs OperationDocument[]
+  operationLines OperationLine[]
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  sku           String   @unique
+  name          String
+  barcode       String?
+  description   String?
+  unitId        String?
+  /// ВГХ
+  lengthMm      Float?
+  widthMm       Float?
+  heightMm      Float?
+  weightNetKg   Float?
+  weightGrossKg Float?
+  volumeM3      Float?
+  minStock      Float    @default(0)
+  /// Синхронизируется с моделью учёта (для быстрых проверок)
+  trackLots     Boolean      @default(false)
+  trackExpiry   Boolean      @default(false)
+  /// Срок хранения: число + единица (дни / недели / годы)
+  shelfLifeDays Int?
+  shelfLifeUnit ShelfLifeUnit @default(DAY)
+  accountingModelId String?
+  isActive      Boolean      @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  unit            Unit?            @relation(fields: [unitId], references: [id])
+  accountingModel AccountingModel? @relation(fields: [accountingModelId], references: [id])
+  packages        Package[]
+  lots            Lot[]
+  balances        StockBalance[]
+  inboundLines    InboundLine[]
+  outboundLines   OutboundLine[]
+  movements       StockMovement[]
+  operationLines  OperationLine[]
+}
+
+model Location {
+  id           String       @id @default(cuid())
+  code         String       @unique
+  name         String
+  zoneId       String?
+  aisle        String?
+  rack         String?
+  level        String?
+  position     String?
+  type         LocationType @default(STORAGE)
+  palletTypeId String?
+  barcode      String?
+  lengthMm     Float?
+  widthMm      Float?
+  heightMm     Float?
+  maxWeightKg  Float?
+  mapX         Float        @default(40)
+  mapY         Float        @default(40)
+  mapW         Float        @default(80)
+  mapH         Float        @default(48)
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  zone          Zone?           @relation(fields: [zoneId], references: [id])
+  palletType    PalletType?     @relation(fields: [palletTypeId], references: [id])
+  pallets       Pallet[]
+  balances      StockBalance[]
+  inboundLines  InboundLine[]
+  outboundLines OutboundLine[]
+  movementsFrom StockMovement[] @relation("FromLocation")
+  movementsTo   StockMovement[] @relation("ToLocation")
+  opDocsFrom    OperationDocument[] @relation("OpFromLocation")
+  opDocsTo      OperationDocument[] @relation("OpToLocation")
+  opLinesFrom   OperationLine[] @relation("OpLineFrom")
+  opLinesTo     OperationLine[] @relation("OpLineTo")
+}
+
+model Lot {
+  id             String    @id @default(cuid())
+  productId      String
+  number         String
+  expiryDate     DateTime?
+  manufacturedAt DateTime?
+  createdAt      DateTime  @default(now())
+
+  product       Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  balances      StockBalance[]
+  inboundLines  InboundLine[]
+  outboundLines OutboundLine[]
+  movements     StockMovement[]
+  operationLines OperationLine[]
+
+  @@unique([productId, number])
+  @@index([expiryDate])
+}
+
+model StockBalance {
+  id         String  @id @default(cuid())
+  productId  String
+  locationId String
+  lotId      String?
+  lotKey     String  @default("")
+  palletId   String?
+  palletKey  String  @default("")
+  /// Упаковка остатка (как принято / как лежит в ячейке)
+  packageId  String?
+  packageKey String  @default("")
+  /// Количество в базовых единицах номенклатуры
+  quantity   Float   @default(0)
+
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  lot      Lot?     @relation(fields: [lotId], references: [id])
+  pallet   Pallet?  @relation(fields: [palletId], references: [id])
+  package  Package? @relation(fields: [packageId], references: [id])
+
+  @@unique([productId, locationId, lotKey, palletKey, packageKey])
+  @@index([locationId])
+  @@index([lotId])
+  @@index([palletId])
+  @@index([packageId])
+}
+
+enum InboundKind {
+  PLANNED
+  URGENT
+  RETURN
+  TRANSFER
+}
+
+enum OutboundKind {
+  PLANNED
+  URGENT
+  RETURN
+  TRANSFER
+}
+
+enum ReceivingDockStatus {
+  FREE
+  BUSY
+}
+
+model ReceivingDock {
+  id        String              @id @default(cuid())
+  code      String              @unique
+  name      String
+  zoneId    String?
+  status    ReceivingDockStatus @default(FREE)
+  isActive  Boolean             @default(true)
+  notes     String?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  zone      Zone?             @relation(fields: [zoneId], references: [id], onDelete: SetNull)
+  inboundDocuments  InboundDocument[]  @relation("ReceivingDockInbound")
+  outboundDocuments OutboundDocument[] @relation("ReceivingDockOutbound")
+
+  @@index([status])
+}
+
+model TransportUnit {
+  id            String   @id @default(cuid())
+  code          String   @unique
+  plateNumber   String
+  carrierName   String?
+  driverName    String
+  driverPhone     String?
+  driverLicense String?
+  passport      String?
+  notes         String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  inboundDocuments  InboundDocument[] @relation("TransportInbound")
+  outboundDocuments OutboundDocument[] @relation("TransportOutbound")
+
+  @@index([plateNumber])
+}
+
+model InboundDocument {
+  id                String       @id @default(cuid())
+  number            String       @unique
+  supplier          String?
+  /// Тип приёмки
+  kind              InboundKind  @default(PLANNED)
+  /// Заказ поставщика (PO)
+  purchaseOrderRef  String?
+  /// ТТН / транспортная накладная
+  waybillRef        String?
+  externalRef       String?
+  expectedDate      DateTime?
+  /// Фактическое прибытие транспорта
+  actualArrivalAt   DateTime?
+  receivingDockId   String?
+  transportUnitId   String?
+  responsibleUserId String?
+  /// Код из справочника Status (forInbound)
+  status            String       @default("DRAFT")
+  notes             String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  postedAt          DateTime?
+
+  responsibleUser User?                  @relation("InboundResponsible", fields: [responsibleUserId], references: [id], onDelete: SetNull)
+  receivingDock   ReceivingDock?         @relation("ReceivingDockInbound", fields: [receivingDockId], references: [id], onDelete: SetNull)
+  transportUnit   TransportUnit?         @relation("TransportInbound", fields: [transportUnitId], references: [id], onDelete: SetNull)
+  lines           InboundLine[]
+  operationDocs   OperationDocument[]
+  statusHistory   InboundStatusHistory[]
+
+  @@index([kind])
+  @@index([purchaseOrderRef])
+  @@index([waybillRef])
+  @@index([receivingDockId])
+  @@index([transportUnitId])
+}
+
+model InboundStatusHistory {
+  id          String   @id @default(cuid())
+  documentId  String
+  fromStatus  String?
+  toStatus    String
+  changedAt   DateTime @default(now())
+  changedById String?
+  /// web | tsd | system
+  source      String?
+  note        String?
+
+  document  InboundDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  changedBy User?           @relation(fields: [changedById], references: [id], onDelete: SetNull)
+
+  @@index([documentId, changedAt])
+}
+
+model InboundLine {
+  id         String    @id @default(cuid())
+  documentId String
+  productId  String
+  /// Упаковка поступления (например коробка ×10); quantity всегда в базовых ед.
+  packageId  String?
+  /// Кол-во упаковок, если выбрана packageId
+  packageQty Float?
+  /// Заполняется при приёмке/размещении на ТСД; в заказе может быть пусто
+  locationId String?
+  palletId   String?
+  lotId      String?
+  lotNumber  String?
+  expiryDate DateTime?
+  /// Количество в базовых единицах номенклатуры
+  quantity   Float
+  lineNo     Int       @default(1)
+
+  document InboundDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  product  Product         @relation(fields: [productId], references: [id])
+  package  Package?        @relation(fields: [packageId], references: [id])
+  location Location?       @relation(fields: [locationId], references: [id])
+  pallet   Pallet?         @relation(fields: [palletId], references: [id])
+  lot      Lot?            @relation(fields: [lotId], references: [id])
+}
+
+model OutboundDocument {
+  id          String       @id @default(cuid())
+  number      String       @unique
+  customer    String?
+  /// Тип отгрузки
+  kind        OutboundKind @default(PLANNED)
+  /// Заказ клиента (SO)
+  salesOrderRef String?
+  /// ТТН / транспортная накладная
+  waybillRef  String?
+  externalRef String?
+  shipDate    DateTime?
+  /// Фактическая отгрузка транспорта
+  actualShipmentAt DateTime?
+  receivingDockId  String?
+  transportUnitId  String?
+  /// Код из справочника Status (forOutbound)
+  status      String    @default("DRAFT")
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  postedAt    DateTime?
+
+  receivingDock ReceivingDock?         @relation("ReceivingDockOutbound", fields: [receivingDockId], references: [id], onDelete: SetNull)
+  transportUnit TransportUnit?         @relation("TransportOutbound", fields: [transportUnitId], references: [id], onDelete: SetNull)
+  lines         OutboundLine[]
+  statusHistory OutboundStatusHistory[]
+
+  @@index([kind])
+  @@index([salesOrderRef])
+  @@index([waybillRef])
+  @@index([receivingDockId])
+  @@index([transportUnitId])
+}
+
+model OutboundStatusHistory {
+  id          String   @id @default(cuid())
+  documentId  String
+  fromStatus  String?
+  toStatus    String
+  changedAt   DateTime @default(now())
+  changedById String?
+  /// web | tsd | system
+  source      String?
+  note        String?
+
+  document  OutboundDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  changedBy User?            @relation(fields: [changedById], references: [id], onDelete: SetNull)
+
+  @@index([documentId, changedAt])
+}
+
+model OutboundLine {
+  id         String  @id @default(cuid())
+  documentId String
+  productId  String
+  locationId String
+  packageId  String?
+  /// Кол-во упаковок, если выбрана packageId
+  packageQty Float?
+  lotId      String?
+  /// Количество в базовых единицах
+  quantity   Float
+  lineNo     Int     @default(1)
+
+  document OutboundDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  product  Product          @relation(fields: [productId], references: [id])
+  location Location         @relation(fields: [locationId], references: [id])
+  package  Package?         @relation(fields: [packageId], references: [id])
+  lot      Lot?             @relation(fields: [lotId], references: [id])
+}
+
+model StockMovement {
+  id             String       @id @default(cuid())
+  type           MovementType
+  productId      String
+  lotId          String?
+  palletId       String?
+  packageId      String?
+  fromLocationId String?
+  toLocationId   String?
+  quantity       Float
+  referenceType  String?
+  referenceId    String?
+  note           String?
+  createdAt      DateTime     @default(now())
+
+  product      Product   @relation(fields: [productId], references: [id])
+  lot          Lot?      @relation(fields: [lotId], references: [id])
+  pallet       Pallet?   @relation(fields: [palletId], references: [id])
+  package      Package?  @relation(fields: [packageId], references: [id])
+  fromLocation Location? @relation("FromLocation", fields: [fromLocationId], references: [id])
+  toLocation   Location? @relation("ToLocation", fields: [toLocationId], references: [id])
+
+  @@index([productId])
+  @@index([createdAt])
+  @@index([palletId])
+  @@index([packageId])
+}
+
+/* ─── Auth / roles ─── */
+
+model User {
+  id           String     @id @default(cuid())
+  /// Учётный логин (историческое имя колонки email)
+  email        String     @unique
+  name         String
+  passwordHash String
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  roles        UserRole[]
+  tsdDevices   TsdDevice[]
+  tsdSessions  TsdTaskSession[]
+  operationDocs OperationDocument[]
+  inboundStatusChanges InboundStatusHistory[]
+  outboundStatusChanges OutboundStatusHistory[]
+  inboundDocumentsResponsible InboundDocument[] @relation("InboundResponsible")
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  code        String           @unique
+  name        String
+  description String?
+  isSystem    Boolean          @default(false)
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model RolePermission {
+  roleId  String
+  /// Код права из registry, напр. tsd.receive
+  code    String
+  enabled Boolean @default(false)
+  role    Role    @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, code])
+}
+
+model UserRole {
+  userId String
+  roleId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model NavIconOverride {
+  id      String @id @default(cuid())
+  /// module code or nav group key, e.g. "nsi" | "inbound" | "group:НСИ"
+  code    String @unique
+  iconKey String
+}
+
+/// Пользовательский пункт левого меню (ссылка на справочник или URL).
+model NavItem {
+  id             String   @id @default(cuid())
+  /// Уникальный код для иконки и админки, напр. nav:brands
+  code           String   @unique
+  label          String
+  href           String
+  iconKey        String   @default("grid")
+  sortOrder      Int      @default(0)
+  isActive       Boolean  @default(true)
+  openInNewTab   Boolean  @default(false)
+  /// JSON-массив префиксов для подсветки активного пункта
+  activePrefixes String?
+  /// Связь с MetaEntity.code (пользовательский справочник)
+  metaEntityCode String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@index([metaEntityCode])
+}
+
+/* ─── Meta constructor ─── */
+
+model MetaEntity {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  pluralName  String?
+  description String?
+  /// catalog | document | journal
+  kind        String   @default("catalog")
+  /// system | custom
+  storage     String   @default("system")
+  /// generic | inbound | outbound | operation
+  handler     String?
+  /// Default route prefix for documents/journals
+  routePrefix String?  @default("/doc")
+  /// JSON array: lines, workflow, stock, tsd
+  capabilities String?
+  /// NavItem.code — раздел левого меню (null = НСИ)
+  navItemCode String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  attributes      MetaAttribute[]
+  sections        MetaFormSection[]
+  records         MetaRecord[]
+  lineDefinitions MetaLineDefinition[]
+
+  @@index([navItemCode])
+}
+
+model MetaLineDefinition {
+  id        String @id @default(cuid())
+  entityId  String
+  code      String @default("lines")
+  name      String
+  sortOrder Int    @default(0)
+
+  entity  MetaEntity       @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  columns MetaLineColumn[]
+  records MetaLineRecord[]
+
+  @@unique([entityId, code])
+}
+
+model MetaLineColumn {
+  id            String  @id @default(cuid())
+  lineDefId     String
+  code          String
+  name          String
+  type          String  @default("string")
+  systemField   String?
+  refEntityCode String?
+  required      Boolean @default(false)
+  listVisible   Boolean @default(true)
+  sortOrder     Int     @default(0)
+
+  lineDef MetaLineDefinition @relation(fields: [lineDefId], references: [id], onDelete: Cascade)
+
+  @@unique([lineDefId, code])
+}
+
+model MetaFormSection {
+  id       String @id @default(cuid())
+  entityId String
+  code     String
+  name     String
+  order    Int    @default(0)
+
+  entity     MetaEntity      @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  attributes MetaAttribute[]
+
+  @@unique([entityId, code])
+}
+
+model MetaAttribute {
+  id            String  @id @default(cuid())
+  entityId      String
+  code          String
+  name          String
+  /// string | number | bool | date | enum | ref | table
+  type          String  @default("string")
+  required      Boolean @default(false)
+  unique        Boolean @default(false)
+  refEntityCode String?
+  /// JSON array of enum values
+  enumValues    String?
+  sectionId     String?
+  order         Int     @default(0)
+  isSystem      Boolean @default(false)
+  /// Prisma field name for system entities
+  systemField   String?
+  listVisible   Boolean @default(true)
+  /// Показывать в форме документа / каталога
+  formVisible   Boolean @default(true)
+  /// Спец. виджет: counterparty_supplier | counterparty_customer | receivingDock | transportUnit | readonly
+  widget        String?
+
+  entity  MetaEntity       @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  section MetaFormSection? @relation(fields: [sectionId], references: [id])
+  values  MetaValue[]
+
+  @@unique([entityId, code])
+}
+
+model MetaRecord {
+  id        String   @id @default(cuid())
+  entityId  String
+  code      String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entity MetaEntity  @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  values MetaValue[]
+  lines  MetaLineRecord[]
+
+  @@unique([entityId, code])
+  @@index([entityId])
+}
+
+/// Строка табличной части пользовательского документа (EAV-lite через JSON).
+model MetaLineRecord {
+  id        String   @id @default(cuid())
+  recordId  String
+  lineDefId String
+  lineNo    Int      @default(0)
+  /// JSON: { "columnCode": value }
+  dataJson  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  record  MetaRecord         @relation(fields: [recordId], references: [id], onDelete: Cascade)
+  lineDef MetaLineDefinition @relation(fields: [lineDefId], references: [id], onDelete: Cascade)
+
+  @@index([recordId, lineDefId])
+}
+
+model MetaValue {
+  id          String    @id @default(cuid())
+  recordId    String
+  attributeId String
+  valueText   String?
+  valueNumber Float?
+  valueBool   Boolean?
+  valueDate   DateTime?
+  valueJson   String?
+
+  record    MetaRecord    @relation(fields: [recordId], references: [id], onDelete: Cascade)
+  attribute MetaAttribute @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+
+  @@unique([recordId, attributeId])
+}
+
+/* ─── TSD devices ─── */
+
+model TsdDevice {
+  id         String    @id @default(cuid())
+  deviceKey  String    @unique
+  name       String
+  userId     String?
+  lastSeenAt DateTime?
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+
+  user     User?            @relation(fields: [userId], references: [id])
+  sessions TsdTaskSession[]
+}
+
+model TsdTaskSession {
+  id           String   @id @default(cuid())
+  /// receive | putaway
+  type         String
+  status       String   @default("open")
+  userId       String?
+  deviceId     String?
+  documentId   String?
+  palletId     String?
+  locationId   String?
+  plannedLocId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  closedAt     DateTime?
+
+  user   User?      @relation(fields: [userId], references: [id])
+  device TsdDevice? @relation(fields: [deviceId], references: [id])
+  pallet Pallet?    @relation(fields: [palletId], references: [id])
+
+  @@index([type, status])
+  @@index([documentId])
+  @@index([palletId])
+}
+
+/// Документ складской операции: кто / что / куда / зачем.
+model OperationDocument {
+  id                String           @id @default(cuid())
+  number            String           @unique
+  type              OperationDocType
+  /// Код из Status
+  status            String           @default("POSTED")
+  createdByUserId   String?
+  inboundDocumentId String?
+  palletId          String?
+  sessionId         String?
+  fromLocationId    String?
+  toLocationId      String?
+  notes             String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  postedAt          DateTime?
+
+  createdBy       User?            @relation(fields: [createdByUserId], references: [id])
+  inboundDocument InboundDocument? @relation(fields: [inboundDocumentId], references: [id])
+  pallet          Pallet?          @relation(fields: [palletId], references: [id])
+  fromLocation    Location?        @relation("OpFromLocation", fields: [fromLocationId], references: [id])
+  toLocation      Location?        @relation("OpToLocation", fields: [toLocationId], references: [id])
+  lines           OperationLine[]
+
+  @@index([type, createdAt])
+  @@index([inboundDocumentId])
+  @@index([palletId])
+}
+
+model OperationLine {
+  id           String  @id @default(cuid())
+  documentId   String
+  productId    String
+  packageId    String?
+  lotId        String?
+  palletId     String?
+  fromLocationId String?
+  toLocationId String?
+  quantity     Float
+  packageQty   Float?
+  note         String?
+  lineNo       Int     @default(1)
+
+  document     OperationDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  product      Product           @relation(fields: [productId], references: [id])
+  package      Package?          @relation(fields: [packageId], references: [id])
+  lot          Lot?              @relation(fields: [lotId], references: [id])
+  pallet       Pallet?           @relation(fields: [palletId], references: [id])
+  fromLocation Location?         @relation("OpLineFrom", fields: [fromLocationId], references: [id])
+  toLocation   Location?         @relation("OpLineTo", fields: [toLocationId], references: [id])
+
+  @@index([documentId])
+}
+
+model PutawayRuleSetting {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  enabled    Boolean  @default(true)
+  priority   Int      @default(100)
+  paramsJson String   @default("{}")
+  updatedAt  DateTime @updatedAt
+}
+
+/* ─── Integration subsystem ─── */
+
+model IntegrationOutbox {
+  id            String    @id @default(cuid())
+  eventType     String
+  aggregateType String
+  aggregateId   String
+  payload       String
+  status        String    @default("pending")
+  attempts      Int       @default(0)
+  lastError     String?
+  createdAt     DateTime  @default(now())
+  processedAt   DateTime?
+
+  @@index([status, createdAt])
+}
+
+model IntegrationInbox {
+  id          String    @id @default(cuid())
+  source      String
+  eventType   String
+  externalId  String?
+  payload     String
+  status      String    @default("received")
+  lastError   String?
+  createdAt   DateTime  @default(now())
+  processedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([source, externalId])
+}
+
+model IntegrationEndpoint {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  /// webhook | 1c
+  type      String   @default("webhook")
+  url       String?
+  secret    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model IntegrationApiKey {
+  id        String   @id @default(cuid())
+  name      String
+  keyHash   String
+  keyPrefix String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+/// Key-value настройки из SETTINGS_REGISTRY (расширяемые без ALTER TABLE Settings).
+model AppSetting {
+  key       String   @id
+  value     String   /// JSON-encoded
+  updatedAt DateTime @updatedAt
+}
